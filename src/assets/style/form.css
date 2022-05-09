@@ -1,0 +1,57 @@
+form .send {
+    text-align: right;
+ }
+.success>div {
+    display: flex;
+    justify-content: center;
+    animation: fadein 800ms linear;
+    padding: 10px;
+    border: white 2px solid;
+}
+
+.success h3 {
+    margin-left: 12px;
+}
+
+input:focus,
+textarea:focus {
+    color: var(--text-focus);
+    border-bottom-color: var(--text-focus);
+    border-color: var(--text-focus) 1px dotted;
+}
+
+.error {
+    color: var(--error-color);
+    text-align: center;
+    padding: 10px;
+    border: var(--error-color) 1px solid;
+    border-radius: 5%;
+}
+
+.error-form {
+    border-color: var(--error-color);
+}
+
+footer h3, footer h2{
+  color:  var(--text-focus);
+}
+
+button {
+    font-weight: bold;
+    margin: 10px 0;
+    cursor: pointer;
+    padding: 10px 20px 9px;
+    color: var(--text-focus);
+    background-color: var(--background-footer);
+    border:  var(--text-focus) 1px solid ;
+    transition: all 1s;
+  }
+
+  button:hover{
+    color: var(--background-footer);
+    background-color: var(--text-focus);
+    transition: all 1s;
+}
+.adress h3{
+    text-align: center;
+}

@@ -1,0 +1,91 @@
+.empty {
+    width: 500px;
+    height: auto;
+    border-radius: 5%;
+    border: white 2px solid;
+    background-color: black;
+    border-radius: 5%;
+    overflow: hidden;
+    padding-top: 10px;
+}
+
+figcaption {
+    text-align: center;
+    background-color: #000000;
+    color: white;
+    padding: 5%;
+    margin: 0;
+}
+
+img {
+    opacity: 80%;
+    transition: ease-out 1s;
+}
+
+.empty:hover img,
+figcaption {
+    opacity: 100%;
+    cursor: pointer;
+}
+
+.empty:hover img,
+.project img:hover {
+    transform: scale(1.2);
+}
+
+.project {
+    display: flex;
+    justify-content: space-between;
+    text-align: right;
+    margin-bottom: 40px;
+}
+
+.project a {
+    background-color: var(--background-footer);
+    color: var(--text-focus);
+    text-decoration: none;
+    padding: 10px 22px;
+    font-weight: bolder;
+    transition:all 1s;
+}
+
+.project a:hover {
+    background-color: var(--text-focus) ;
+    color: var(--background-footer);
+    transition:all 1s;
+}
+
+h4 {
+    margin-top: 0;
+    font-size: 1.3rem;
+}
+
+.project:nth-last-of-type(even) {
+    flex-direction: row-reverse;
+    text-align: left;
+}
+
+.desc-project {
+    padding: 20px;
+}
+
+.project-img {
+    padding: 10px;
+    width: 500px;
+    height: auto;
+    border-radius: 5%;
+    border: white 2px solid;
+    background-color: black;
+}
+
+img {
+    width: 100%;
+}
+
+.project-container {
+    margin-bottom: 20px;
+}
+
+.desc-project >a{
+    cursor: pointer;
+}
