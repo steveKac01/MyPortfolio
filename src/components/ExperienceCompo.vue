@@ -3,32 +3,46 @@
 
     <h1>EXPERIENCE {{ this.isDarkMode ? "Theme NUIT" : "theme JOUR" }}</h1>
     <ul>
-      <li>2022: Actuellement en recherche de stage.</li>
+      <!--   <li>2022: Actuellement en recherche de stage.</li> -->
       <li>2021-2022: Formation développeur web et web mobile à la CCI lyon.</li>
       <div class="formation-caroussel">
-                <!-- Front row -->
+        <!-- Front row -->
         <div class="exp-row">
-          <div class="skills" style="background-color:red">a</div>
-          <div class="skills" style="background-color:blue"></div>
-          <div class="skills" style="background-color:black"></div>
-          <div class="skills" style="background-color:yellow"></div>
+          <div class="skills">
+            <img :src="require(`../assets/img/git-logo.png`)" alt="git-logo">
+          </div>
+          <div class="skills">
+
+            <img :src="require(`../assets/img/javascript-logo.png`)" alt="javascript-logo">
+          </div>
+          <div class="skills">
+            <img :src="require(`../assets/img/wordpress-logo.png`)" alt="wordpress-logo">
+
+          </div>
+          <div class="skills">
+            <img :src="require(`../assets/img/vue-logo.png`)" alt="vue-logo">
+          </div>
         </div>
         <!-- Back row -->
         <div class="exp-row">
-          <div class="skills" style="background-color:gray">c</div>
-          <div class="skills" style="background-color:blue"></div>
-          <div class="skills" style="background-color:black"></div>
-          <div class="skills" style="background-color:yellow"></div>
-        </div>
+          <div class="skills">
+            <img :src="require(`../assets/img/php-logo.png`)" alt="php-logo">
 
-        <div class="back">
-          <img :src="require(`../assets/img/js.png`)" alt="js-logo" style='max-width:150px'>
-          <img :src="require(`../assets/img/git.png`)" alt="js-logo" style='max-width:150px'>
-          <img :src="require(`../assets/img/vue.jpg`)" alt="js-logo" style='max-width:150px'>
-          <img :src="require(`../assets/img/symfony.png`)" alt="js-logo" style='max-width:150px'>
+          </div>
+          <div class="skills">
+            <img :src="require(`../assets/img/mysql-logo.png`)" alt="mysql-logo">
 
-          <img :src="require(`../assets/img/php.png`)" alt="js-logo" style='max-width:150px'>
+          </div>
+          <div class="skills">
 
+            <img :src="require(`../assets/img/symfony-logo.png`)" alt="symfony-logo">
+
+          </div>
+          <div class="skills">
+
+            <img :src="require(`../assets/img/docker-logo.png`)" alt="docker-logo">
+
+          </div>
         </div>
 
       </div>
@@ -53,7 +67,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 /* test skills*/
-.exp-row{
+.exp-row {
   display: flex;
   justify-content: start;
 }
@@ -71,21 +85,25 @@ ul {
 li {
   margin: 0;
   padding: 10px;
-  background-color: white;
+  background: var(--background-footer);
+  color: white;
 }
 
 li:nth-child(even) {
   color: white;
-  background: var(--background-footer);
+  background-color: white;
+
 }
 
 .formation-caroussel {
   /*  check typo*/
-  margin-top: 10px;
+
   text-align: center;
 }
 
-img{
+img {
   width: 100%;
+  height: 100%;
+  border: BLACK 1px solid;
 }
 </style>

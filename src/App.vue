@@ -83,7 +83,7 @@ nav a.router-link-exact-active {
 :root {
   --background-color: #cccccc;
   --text-color: #2b2929;
-  --text-link: black;
+  --text-link: lightblue;
   --background-slide: rgba(58, 137, 193, 0.6);
   --background-footer: #2c3e50;
   --text-invert-color: #cccccc;

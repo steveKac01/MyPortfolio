@@ -189,8 +189,8 @@ li:hover {
   text-decoration: none;
 }
 
-.slide-cat a:hover {
-  color: var(--text-link) !important;
+.slide-cat li:hover {
+  color: var(--text-focus) !important;
 }
 
 .slide-cat ul {
@@ -281,15 +281,10 @@ li:hover {
     cursor: pointer;
   }
 
-  .big-nav a {
-    color: var(--textColor);
-    text-decoration: none;
+ .big-nav li:hover{
+    color: var(--text-focus);
   }
-
-  .big-nav a:hover {
-    color: var(--text-link);
-    text-decoration: none;
-  }
+ 
 }
 
 /*icon test*/
