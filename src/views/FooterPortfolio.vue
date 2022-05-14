@@ -5,7 +5,8 @@
     </div>  
       <div class="footer-container">
         <div id="contact-form-container">
-          <ContactForm></ContactForm>
+         
+          <ContactForm></ContactForm> 
         </div>
         <div><!-- void -->
         </div>

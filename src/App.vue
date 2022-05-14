@@ -5,7 +5,6 @@
 
     <div id="section">
       <ExperienceCompo :isDarkMode="this.isDarkMode"></ExperienceCompo>
-      <!--  <ProjetsCompo :isDarkMode="this.isDarkMode"></ProjetsCompo>-->
       <div id="projects">
         <h1>PROJETS {{ this.isDarkMode ? "Theme NUIT" : "theme JOUR" }}</h1>
         <router-view />
@@ -21,7 +20,6 @@ import NavBar from "./components/NavBar.vue"
 import IntroScene from "./components/IntroScene.vue"
 import FooterPortfolio from "./components/FooterPortfolio.vue"
 import ExperienceCompo from "./components/ExperienceCompo.vue"
-//import ProjetsCompo from "./components/ProjetsCompo.vue"
 
 export default {
   components: {

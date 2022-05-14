@@ -62,7 +62,7 @@
 
 .copyright {
   color: white;
-  font-size: 0.6em;
+  font-size: 0.8em;
   padding: 30px 0 15px 0;
   text-align: center;
 }
@@ -141,7 +141,10 @@ li>h3 {
   .footer-container {
     flex-direction: row-reverse;
     justify-content: space-evenly;
-  }
+    min-height: 45vh;
+
+    }
+
 
   .input {
     display: flex;
@@ -154,6 +157,7 @@ li>h3 {
     display: flex;
     padding: 0px 0px 0 0px;
     flex-direction: column;
+    margin: auto auto;
   }
 
   input,
@@ -181,5 +185,6 @@ li>h3 {
     margin-top: 10px;
     margin-bottom: 30px;
   }
+ 
 /**************************END DESKTOP ******************************/
 }

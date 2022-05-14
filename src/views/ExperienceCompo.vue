@@ -55,7 +55,7 @@ export default {
 /* test skills*/
 .exp-row{
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
 }
 
 .skills {

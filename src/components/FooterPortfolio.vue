@@ -5,11 +5,13 @@
     </div>  
       <div class="footer-container">
         <div id="contact-form-container">
-          <ContactForm></ContactForm>
+           <div class="col-right"> 
+          <ContactForm></ContactForm></div>
         </div>
         <div><!-- void -->
         </div>
         <div id="contact-adress-container">
+          
           <div class="adress">
             <div>
               <ul>
@@ -26,10 +28,10 @@
             <div class="social">
               <div> <a href="https://github.com/steveKac01?tab=repositories" target="_blank">
                   <font-awesome-icon icon="fab fa-github " size="3x" alt="github-icon" />
-                </a></div>
+                </a></div><!--
               <div> <a href="#">
                   <font-awesome-icon icon="fab fa-linkedin " size="3x" alt="linkedin-icon" />
-                </a></div>
+                </a></div>-->
               <div> <a href="mailto:kaci.steve@k-net.fr">
                   <font-awesome-icon icon="fas fa-at " size="3x" alt="envelope-icon" />
                 </a></div>

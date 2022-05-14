@@ -31,7 +31,7 @@ export default {
         getImg(idx) {
 
             try {
-                return require(`../assets/img/project${idx + 1}.png`)
+                return require(`../assets/img/project/project${idx + 1}.png`)
             } catch {
                 return "http://triathlondegerardmer.com/wp-content/uploads/2019/02/no-image.jpg"
             }

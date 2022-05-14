@@ -69,7 +69,7 @@ export default {
 /* test skills*/
 .exp-row {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
 }
 
 .skills {
@@ -102,6 +102,7 @@ li:nth-child(even) {
 }
 
 img {
+  box-sizing: border-box;
   width: 100%;
   height: 100%;
   border: BLACK 1px solid;

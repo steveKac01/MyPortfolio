@@ -38,6 +38,8 @@ figcaption {
     justify-content: space-between;
     text-align: right;
     margin-bottom: 40px;
+    white-space :pre-line;
+    line-height: 1.3em;
 }
 
 .project a {
@@ -60,7 +62,7 @@ h4 {
     font-size: 1.3rem;
 }
 
-.project:nth-last-of-type(even) {
+.project:nth-last-of-type(odd) {
     flex-direction: row-reverse;
     text-align: left;
 }
@@ -72,10 +74,8 @@ h4 {
 .project-img {
     padding: 10px;
     width: 500px;
-    height: auto;
-    border-radius: 5%;
-    border: white 2px solid;
-    background-color: black;
+
+
 }
 
 img {
@@ -88,4 +88,17 @@ img {
 
 .desc-project >a{
     cursor: pointer;
+}
+p{
+    margin-bottom: 25px;
+}
+
+/************************** DESKTOP ******************************/
+@media screen and (min-width: 768px) {   
+    .desc-project,.project-img {
+
+        max-width: 50%;
+    }
+
+
 }
