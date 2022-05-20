@@ -1,26 +1,35 @@
 <template>
   
         <div class="project-container">
-            <div class="project" v-for="(project, idx) in projects" :key="idx">
+         
+         
+         <div class="project" v-for="(project, idx) in projects" :key="idx">
                 <div class="project-img"><img :src="getImg(idx)" :alt="project.title">
                 </div>
                 <div class="desc-project">
                     <H4>{{ project.title }}</H4>
                     <p>{{ project.description }}</p>
-                    <a v-if="project.githublink != ''" :href="project.githublink" target="_blank">
-                        <font-awesome-icon icon="fab fa-github " alt="github-icon" style="margin-right:5px" /> GITHUB
-                    </a>
-                    <a v-if="project.link != ''" @click="goToProject(project.link)"> DETAILS</a>
-                </div>
+                    <div class="buttons">
+                        <a  v-if="project.github===true" :href="project.link" target="_blank">
+                        <button-project :github="project.github" label="GITHUB"></button-project></a>
+
+                                <a @click="goToProject(project.link)" v-else>
+                        <button-project :github="project.github" label="DETAILS"></button-project></a>
+               </div></div> 
             </div>
-        </div>
+        
+            </div>
 </template>
 
 <script>
 import { projects } from "../assets/datas/projects"
+import ButtonProject from '../components/ButtonComponent.vue'
 
 export default {
     name: 'ProjetsCompo',
+    components:{
+        ButtonProject
+    },
     props: {
         isDarkMode: Boolean
     },
@@ -29,13 +38,11 @@ export default {
     }),
     methods: {
         getImg(idx) {
-
             try {
                 return require(`../assets/img/project${idx + 1}.png`)
             } catch {
                 return "http://triathlondegerardmer.com/wp-content/uploads/2019/02/no-image.jpg"
             }
-
         },
         goToProject(url) {
             this.$router.push({ name: url })

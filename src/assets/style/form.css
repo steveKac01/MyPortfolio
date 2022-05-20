@@ -35,7 +35,7 @@ textarea:focus {
 footer h3, footer h2{
   color:  var(--text-focus);
 }
-
+ 
 button {
     font-weight: bold;
     margin: 10px 0;
@@ -51,7 +51,7 @@ button {
     color: var(--background-footer);
     background-color: var(--text-focus);
     transition: all 1s;
-}
+} 
 .adress h3{
     text-align: center;
 }

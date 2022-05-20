@@ -1,25 +1,10 @@
-.empty {
-    width: 500px;
-    height: auto;
-    border-radius: 5%;
-    border: white 2px solid;
-    background-color: black;
-    border-radius: 5%;
-    overflow: hidden;
-    padding-top: 10px;
-}
 
-figcaption {
-    text-align: center;
-    background-color: #000000;
-    color: white;
-    padding: 5%;
-    margin: 0;
-}
 
 img {
-    opacity: 80%;
+    opacity: 100%;
     transition: ease-out 1s;
+    border: #000000 1px solid;
+
 }
 
 .empty:hover img,
@@ -33,39 +18,23 @@ figcaption {
     transform: scale(1.2);
 }
 
+
+
 .project {
     display: flex;
-    justify-content: space-between;
-    text-align: right;
-    margin-bottom: 40px;
-    white-space :pre-line;
-    line-height: 1.3em;
+    flex-direction: column;
+    margin-bottom: 10%;
+    white-space: pre-line;
 }
 
-.project a {
-    background-color: var(--background-footer);
-    color: var(--text-focus);
-    text-decoration: none;
-    padding: 10px 22px;
-    font-weight: bolder;
-    transition:all 1s;
-}
 
-.project a:hover {
-    background-color: var(--text-focus) ;
-    color: var(--background-footer);
-    transition:all 1s;
-}
 
 h4 {
     margin-top: 0;
     font-size: 1.3rem;
 }
 
-.project:nth-last-of-type(odd) {
-    flex-direction: row-reverse;
-    text-align: left;
-}
+
 
 .desc-project {
     padding: 20px;
@@ -73,9 +42,8 @@ h4 {
 
 .project-img {
     padding: 10px;
-    width: 500px;
-
-
+    width: 250px;
+margin: auto;
 }
 
 img {
@@ -86,19 +54,40 @@ img {
     margin-bottom: 20px;
 }
 
-.desc-project >a{
+.desc-project a{
     cursor: pointer;
 }
 p{
     margin-bottom: 25px;
-}
+    margin-left: 3%;
 
+}
+.buttons{
+    text-align: right;
+}
 /************************** DESKTOP ******************************/
 @media screen and (min-width: 768px) {   
     .desc-project,.project-img {
 
         max-width: 50%;
     }
+    .project {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-bottom: 40px;
+        line-height: 1.3em;
+    }
+   
+    .project:nth-of-type(even) {
+        display: flex;
+        flex-direction: row-reverse;
+    }
+    .project:nth-of-type(even) .buttons {
+       text-align: left;
+       
 
+    }
+ 
 
 }

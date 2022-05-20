@@ -119,7 +119,6 @@ textures.forEach(texture => {
     texture.encoding = THREE.sRGBEncoding;
     texture.flipY = false;
 });
-//Dispose texture loader?
 
 console.log(textures)
 
@@ -238,7 +237,7 @@ window.onresize = function () {
     }
 };
 
-/*
+/* debug methode.
 function logIt() {
     //console.log(camera.position) //Debug pour placer la camera a la bonne position
     //console.log(controls.getPolarAngle());
@@ -247,6 +246,8 @@ function logIt() {
     //console.log(controls.getAzimuthalAngle())
     //controls.maxAzimuthAngle = 0.57
 }*/
+
+
 window.onresize()
 
 animate();

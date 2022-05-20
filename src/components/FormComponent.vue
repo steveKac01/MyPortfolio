@@ -27,7 +27,8 @@
                 <font-awesome-icon icon="fas fa-exclamation-circle" /> {{ messageError }}
             </div>
             <div class="send">
-                <button>ENVOYER</button>
+               <!-- <button>ENVOYER</button>-->
+               <button-project label="ENVOYER" :border="true"></button-project>
             </div>
         </form>
     </div>
@@ -35,9 +36,13 @@
 
 <script>
 import emailjs from 'emailjs-com'
+import ButtonProject from '../components/ButtonComponent.vue'
 
 export default {
     name: 'ContactForm',
+     components:{
+        ButtonProject
+    },
     data: () => ({
         form: {
             name: '',

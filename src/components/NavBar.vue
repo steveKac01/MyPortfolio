@@ -2,8 +2,7 @@
 
   <header>
     <div class="top-bar">
-      <!--*todo* try to catch it without class-->
-      <div class="left-items" @click="showHideSlideMenu()">
+      <div class="left-items" @click="showSlideMenu = !showSlideMenu">
         <div>
           <div id="burger">
             <font-awesome-icon icon="fas fa-bars " size="2x" />
@@ -26,7 +25,7 @@
       <div class="big-nav">
         <ul>
           <div>
-            <li @click="goAnchor('#about')">A PROPOS DE MOI</li>
+            <li @click="goAnchor('#about')">QUI SUIS-JE ?</li>
           </div>
           <div>
             <li @click="goAnchor('#skills')">EXPERIENCES</li>
@@ -35,7 +34,7 @@
           <div>
             <li @click="goAnchor('#projects')">PROJETS</li>
           </div>
-
+            
           <div>
             <li @click="goAnchor('#contact')">CONTACT</li>
           </div>
@@ -43,14 +42,16 @@
         </ul>
       </div>
     </div>
+    
     <div class="slide-container">
-      <div id="test" class="hide">
+      <Transition>
+      <div id="slide" v-if="showSlideMenu">
         <div class="slide-cat">
           <ul>
             <li @click="goAnchor('#about')">
 
               <font-awesome-icon icon="fas fa-user-tie" />
-              | A PROPOS DE MOI
+              | QUI SUIS-JE ?
             </li>
             <hr>
             <li @click="goAnchor('#skills')">
@@ -69,8 +70,9 @@
             </li>
           </ul>
         </div>
-      </div>
+      </div></Transition>
     </div>
+    
 
   </header>
 </template>
@@ -88,16 +90,9 @@ export default {
     goAnchor(selector) {
       console.log(selector)
       var anchor = document.querySelector(selector)
-       document.querySelector("#test").classList.toggle("hide")
+       document.querySelector("#slide").classList.toggle("hide")
 
       window.scrollTo(0, anchor.offsetTop);
-    },
-    showHideSlideMenu() {
-      console.log("shut")
-      let slideMini = document.querySelector("#test")
-
-      slideMini.classList.toggle("hide")
-
     },
     switchTheme() {
       if (this.isDarkMode) {
@@ -231,7 +226,7 @@ li:hover {
 
 /************************** DESKTOP ********************************/
 @media screen and (min-width: 768px) {
-  #test {
+  #slide {
     display: none;
   }
 
@@ -287,7 +282,7 @@ li:hover {
  
 }
 
-/*icon test*/
+/*icons*/
 .right-items {
   position: relative;
   width: 45px;
@@ -296,5 +291,18 @@ li:hover {
 .right-items>div {
   left: 0;
   position: absolute;
+}
+
+
+/* */
+
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
 </style>

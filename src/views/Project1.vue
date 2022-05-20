@@ -1,5 +1,6 @@
 <template>
-    <div id="projects">
+
+<div id="projects">
         <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero tenetur omnis cumque praesentium dolorum
             accusamus cupiditate dolore nam impedit vel? Inventore pariatur asperiores natus itaque vel reprehenderit
@@ -10,6 +11,7 @@
             temporibus omnis quos animi ea. Unde consequatur sequi omnis, in ab soluta eos officia sint cum.
         </p>
         <div>
+            
             <a @click="goBack()"> RETOUR</a>
         </div>
     </div>
@@ -53,5 +55,14 @@ a:hover {
     background-color: var(--text-focus);
     color: var(--background-footer);
     transition: all 1s;
+}
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
 </style>
