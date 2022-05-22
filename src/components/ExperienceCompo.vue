@@ -8,6 +8,9 @@
       <div class="formation-caroussel">
         <!-- Front row -->
         <div class="exp-row">
+            <div class="skills">
+            <img :src="require(`../assets/img/html-logo.png`)" alt="git-logo">
+          </div>
           <div class="skills">
             <img :src="require(`../assets/img/git-logo.png`)" alt="git-logo">
           </div>
@@ -25,6 +28,9 @@
         </div>
         <!-- Back row -->
         <div class="exp-row">
+            <div class="skills">
+            <img :src="require(`../assets/img/css-logo.png`)" alt="git-logo">
+          </div>
           <div class="skills">
             <img :src="require(`../assets/img/php-logo.png`)" alt="php-logo">
 

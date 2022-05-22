@@ -1,5 +1,7 @@
 <template>
   <div id="app">
+
+
     <NavBar @onChangeTheme="handleSwitchTheme"></NavBar>
     <IntroScene :isDarkMode="this.isDarkMode"></IntroScene>
 
@@ -7,7 +9,9 @@
       <ExperienceCompo :isDarkMode="this.isDarkMode"></ExperienceCompo>
       <div id="projects">
         <h1>PROJETS {{ this.isDarkMode ? "Theme NUIT" : "theme JOUR" }}</h1>
-        <router-view />
+    <!-- <transition name="router-anim" enter-active-class="animate__animated animate__fadeInRight" >--> 
+       <router-view />
+    <!-- </transition> -->
       </div>
     </div>
     <FooterPortfolio :isDarkMode="this.isDarkMode"></FooterPortfolio>
@@ -16,21 +20,23 @@
 </template>
 
 <script>
+
 import NavBar from "./components/NavBar.vue"
 import IntroScene from "./components/IntroScene.vue"
 import FooterPortfolio from "./components/FooterPortfolio.vue"
 import ExperienceCompo from "./components/ExperienceCompo.vue"
+import 'animate.css'
 
 export default {
   components: {
     NavBar,
     IntroScene,
     FooterPortfolio,
-    ExperienceCompo
-    // ProjetsCompo
+    ExperienceCompo,
   },
   data: () => ({
-    isDarkMode: false
+    isDarkMode: false,
+
   }),
   methods: {
     handleSwitchTheme(payload) {
@@ -46,8 +52,9 @@ export default {
 
 
 <style>
+
 #section {
-  padding: 20% 0 5% 0;
+  padding: 2% 0 5% 0;
 }
 
 h1 {
@@ -132,13 +139,13 @@ h1 {
 
 @media screen and (min-width: 768px) {
   #section {
-    padding: 20% 5% 5% 5%;
+    padding: 2% 5% 8% ;
   }
 }
 
 @media screen and (min-width: 970px) {
   #section {
-    padding: 20% 15% 5% 17%;
+    padding: 2% 22% 4% 22%;
   }
 }
 

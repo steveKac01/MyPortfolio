@@ -1,116 +1,289 @@
 <template>
-   <div >
-<div id="container">
-
-</div>
-<h2>SCENE 3D {{  isDarkMode? "Theme NUIT" : "theme JOUR" }}</h2>
-</div> 
+  <div class="container-3d">
+    <div class="container-about">
+      <div class="intro">
+        <div class="left">
+          <div>
+            <h2>Steve Kaci</h2>
+          </div>
+          <div>Développeur Web | Lorem dark mode : {{isDarkMode}}</div>
+        </div>
+        <div class="right">
+          <div class="photo">
+            <img :src="require(`../assets/img/photo.png`)" alt="" />
+          </div>
+        </div>
+      </div>
+      <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt vel
+        ipsam sint eum veniam, ea soluta debitis unde? Atque quas quae quos ad
+        repellat expedita cumque vero architecto obcaecati suscipit explicabo
+        libero fugit, ratione magnam dolorem recusandae nobis soluta quis
+        exercitationem perspiciatis reprehenderit!
+      </p>
+    </div>
+  </div>
 </template>
 
-<script> 
- 
+<script>
 import * as THREE from "three";
-//import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-  import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 export default {
-  name: 'IntroScene',
+  name: "IntroScene",
   props: {
     isDarkMode: Boolean
   },
+
+  data: () => ({
+    scene: undefined,
+    render: undefined,
+    camera: undefined,
+    controls: undefined,
+    width: document.documentElement.clientWidth,
+    height: document.documentElement.clientHeight,
+  }),
   methods: {
+    changeDimensions() {
+      const camFactor = 6;
+
+      if (window.innerHeight > window.innerWidth) {
+        //mobile
+        this.render.setSize(window.innerWidth, window.innerHeight);
+      } else {
+        this.render.setSize(window.innerWidth, window.innerHeight);
+      }
+      // update the camera
+      this.camera.left = -window.innerWidth / camFactor;
+      this.camera.right = window.innerWidth / camFactor;
+      this.camera.top = window.innerHeight / camFactor;
+      this.camera.bottom = -window.innerHeight / camFactor;
+      this.camera.updateProjectionMatrix();
+
+      if (window.innerWidth < 760) {
+        this.controls.enabled = false;
+      } else {
+        this.controls.enabled = true;
+      }
+    },
+
+    /**
+     * La boucle principal de l'animation de la scène 3D
+     */
+    animate() {
+      requestAnimationFrame(this.animate);
+      this.cameraRotateBounce();
+      this.controls.update();
+
+      this.render.render(this.scene, this.camera);
+    },
+    /**
+     * Rebond de la caméra de la scène 3D
+     */
+    cameraRotateBounce() {
+      if (this.controls.getAzimuthalAngle() < -0.3) {
+        if (this.controls.autoRotateSpeed > 0.0) {
+          this.controls.autoRotateSpeed *= -1;
+        }
+      }
+      if (this.controls.getAzimuthalAngle() > 0.55) {
+        if (this.controls.autoRotateSpeed < 0.0) {
+          this.controls.autoRotateSpeed *= -1;
+        }
+      }
+    },
   },
- 
-  created(){
-    console.clear();
-    this.scene= new THREE.Scene();
-    this.scene.background = new THREE.Color('skyblue');
-        
+  mounted() {
+    window.addEventListener("resize", this.changeDimensions);
+    /**
+     * Configuration de la scène
+     */
+    const PATH_TO_MODEL = "portfolioSpot.glb";
+    const CANVA_SIZE = [350, 250]; //A virer
+    const IS_ALPHA = true;
+    const USE_ANTIALIASING = true;
+    const AMBIENT_LIGHT_INTENSITY = 1;
+    //const SPEED_AMBIENT = 0.04;
+    //const LIMIT_SWITCH_AMBIENT_LIGHT = 0.2;
+    const CAMERA_ZOOM = 30;
+    const CAMERA_POSITION = [0.2603, 2.8707, 4.5465];
+    const IS_AUTO_ROTATE = true;
+    const SPEED_AUTO_ROTATE = 0.4;
+    const SPEED_USER_ROTATE = 0.05;
+    const IS_ZOOM_ENABLE = false;
 
-  
+    /**
+     * Initialisation de la scène
+     */
+    this.scene = new THREE.Scene();
+    // this.scene.background = new THREE.Color("skyblue");
+
+    /**
+     * Initialisation du renderer
+     */
+    this.render = new THREE.WebGLRenderer({
+      alpha: IS_ALPHA,
+      antialias: USE_ANTIALIASING,
+    });
+    this.render.setSize(CANVA_SIZE[0], CANVA_SIZE[1]);
+    /** Pour de meilleurs couleurs */
+    this.render.outputEncoding = THREE.sRGBEncoding;
+    this.render.setPixelRatio(window.devicePixelRatio); //on test
+    this.render.setSize(window.innerWidth, window.innerHeight);
+
+    /**
+     * Initialisation de la caméra
+     */
+    this.camera = new THREE.OrthographicCamera(
+      -CANVA_SIZE[0] / 2,
+      CANVA_SIZE[0] / 2,
+      CANVA_SIZE[1] / 2,
+      -CANVA_SIZE[1] / 2,
+      1,
+      1000
+    );
+    this.camera.position.set(
+      CAMERA_POSITION[0],
+      CAMERA_POSITION[1],
+      CAMERA_POSITION[2]
+    );
+    this.camera.zoom = CAMERA_ZOOM;
+    this.camera.lookAt(0, -0.3, 0);
+
+    /**
+     * Initialisation des lumières
+     */
+    const ambientLight = new THREE.AmbientLight(
+      0xffffff,
+      AMBIENT_LIGHT_INTENSITY
+    );
+
+    /**
+     * Chargement du modèle 3D
+     */
+    const loader = new GLTFLoader();
+    loader.load(PATH_TO_MODEL, (gltf) => {
+      const modelPerso = gltf.scene;
+      modelPerso.position.set(0, -0.8, 0);
+      modelPerso.scale.set(1, 1, 1);
+      this.scene.add(modelPerso);
+    });
+
+    /**
+     * Initialisation des contrôles
+     */
+    this.controls = new OrbitControls(this.camera, this.render.domElement);
+    this.controls.enableDamping = true;
+    this.controls.enablePan = false;
+    this.controls.autoRotate = IS_AUTO_ROTATE;
+    this.controls.enableZoom = IS_ZOOM_ENABLE;
+    this.controls.autoRotateSpeed = SPEED_AUTO_ROTATE;
+    this.controls.rotateSpeed = SPEED_USER_ROTATE;
+
+    /**
+     * Restriction de la caméra
+     */
+    /** Limitation Haut et bas de la caméra */
+    this.controls.maxPolarAngle = 1.06;
+    this.controls.minPolarAngle = 0.9287;
+    /** Limitation gauche et droite de la caméra */
+    this.controls.maxAzimuthAngle = 0.565;
+    this.controls.minAzimuthAngle = -0.305;
+
+    /**
+     * Ajouter les éléments à la scène et l'attacher au DOM
+     */
+    this.scene.add(ambientLight);
+    const container = document.querySelector(".container-3d");
+    container.append(this.render.domElement);
+
+    /**
+     * Initialisation au chargement
+     */
+    this.changeDimensions();
+    this.animate();
   },
- mounted(){
-
-//Configuration
-const IS_ALPHA = true;
-const USE_ANTIALIASING = true;
-const CANVA_SIZE = [350, 250] //A virer
-const CAMERA_ZOOM = 30;
-const CAMERA_POSITION = [0.2603, 2.8707, 4.5465]
-const AMBIENT_LIGHT_INTENSITY = 1;
-//const PATH_TO_MODEL = require(`../assets/resource/portfolioSpot.glb`)
-const PATH_TO_MODEL = "portfolioSpot.glb"
-const container = document.querySelector("#container")
-
-//Camera
-const camera = new THREE.OrthographicCamera(-CANVA_SIZE[0] / 2, CANVA_SIZE[0] / 2, CANVA_SIZE[1] / 2, - CANVA_SIZE[1] / 2, 1, 1000);
-camera.position.set(CAMERA_POSITION[0], CAMERA_POSITION[1], CAMERA_POSITION[2])
-camera.zoom = CAMERA_ZOOM;
-//camera.lookAt(0, -0.3, 0);
-
-
-//Renderer
-const renderer = new THREE.WebGLRenderer({ alpha: IS_ALPHA, antialias: USE_ANTIALIASING })
-renderer.setSize(CANVA_SIZE[0], CANVA_SIZE[1])
-renderer.setPixelRatio(window.devicePixelRatio) //on test
-renderer.outputEncoding = THREE.sRGBEncoding //better color
-
-//Lights
-//Ambient light
-var ambientLight = new THREE.AmbientLight(0xffffff, AMBIENT_LIGHT_INTENSITY);
-
-//append
-//const containerScene = document.querySelector(".container-3d")
-//containerScene.append(renderer.domElement)
-
-//Scene
-this.scene.add(camera)
-this.scene.add(ambientLight)
-
-
-//Loader GTFL
-const loader = new GLTFLoader();
-
-loader.load(PATH_TO_MODEL, function (gltf)  {
-//let test
-    var model = gltf.scene;
-  //  test = model;
-    model.position.set(0, -0.8, 0);
-    model.scale.set(1, 1, 1);
-    this.scene.add(gltf.scene);
-
-}, undefined, function (error) {
-    console.error("Problem when loading model: " + error);
-});
-
-container.append(renderer.domElement);
-renderer.render(this.scene, camera);
-
-/*
-
-// next, set the renderer to the same size as our container element
-renderer.setSize(container.clientWidth,container.clientHeight);
-
-// finally, set the pixel ratio so that our scene will look good on HiDPI displays
-renderer.setPixelRatio(window.devicePixelRatio);
-
-// add the automatically created <canvas> element to the page
-container.append(renderer.domElement);
-
-// render, or 'create a still image', of the scene
-renderer.render(this.scene, camera);
-  */},
-  data:()=>({
-    scene:undefined,  
-  })
-
-}
+};
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+
 <style scoped>
-div{
-  text-align: center;
+.container-3d {
+  display: flex;
+  justify-content: center;
+  position: relative;
+
+  min-height: 500px;
+}
+
+.intro {
+  display: flex;
+  justify-content: space-between;
+  padding: 5%;
+}
+
+.container-about {
+  background-color: var(--alpha-background);
+  color: #cccccc;
+  position: absolute;
+  /*Si on veut revenir sup ca*/
+  bottom: 0;
+  width: 100%;
+  /* transition: var(--background-color) 3s;*/
+}
+
+.container-about > p {
+  padding: 0 5%;
+}
+
+h2 {
+  font-size: 1.7em;
+}
+
+.left {
+  font-size: 1.2em;
+}
+
+.photo {
+  width: 100px;
+  height: 100px;
+}
+
+.photo > img {
+  border-radius: 80%;
+  width: 100%;
+  border: #ffffff solid 2px;
+}
+
+@media screen and (min-width: 768px) {
+  .container-global {
+    padding: 0 23%;
+  }
+
+  canvas {
+    overflow: unset;
+  }
+
+  .navBar {
+    margin-right: 10%;
+  }
+
+  .container-about {
+    /*Si on veut revenir sup ca*/
+    bottom: 30px;
+    max-width: 810px;
+  }
+
+  .list-contact {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .space-icone {
+    padding: 0 6%;
+  }
 }
 </style>
  
