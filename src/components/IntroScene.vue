@@ -6,7 +6,7 @@
           <div>
             <h2>Steve Kaci</h2>
           </div>
-          <div>Développeur Web | Lorem dark mode : {{isDarkMode}}</div>
+          <div>Développeur Web | Dark mode : {{ isDarkMode }}</div>
         </div>
         <div class="right">
           <div class="photo">
@@ -33,7 +33,10 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 export default {
   name: "IntroScene",
   props: {
-    isDarkMode: Boolean
+    isDarkMode: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   data: () => ({
@@ -41,10 +44,36 @@ export default {
     render: undefined,
     camera: undefined,
     controls: undefined,
+    textures: undefined,
+    modelScene: undefined,
     width: document.documentElement.clientWidth,
     height: document.documentElement.clientHeight,
+    // isSwitchingTheme: false,
+    oldSwitch: false, //test
   }),
   methods: {
+    /**
+     * Change la texture de la scene 3D selon le thème sélectionné.
+     */
+    switchTheme() {
+      if (this.isDarkMode) {
+        //Thème sombre
+        this.applyTexture(1);
+      }
+
+      if (!this.isDarkMode) {
+        //Thème light
+        this.applyTexture(0);
+      }
+    },
+
+    applyTexture(itexture) {
+      this.scene.children[1].children[1].material.map = this.textures[itexture];
+    },
+
+    /**
+     * Mise à jour de la taille de la scène 3D au redimensionnement de la fenêtre
+     */
     changeDimensions() {
       const camFactor = 6;
 
@@ -72,12 +101,17 @@ export default {
      * La boucle principal de l'animation de la scène 3D
      */
     animate() {
+      if (this.oldSwitch != this.isDarkMode) {
+        this.switchTheme();
+      }
+
       requestAnimationFrame(this.animate);
       this.cameraRotateBounce();
       this.controls.update();
-
       this.render.render(this.scene, this.camera);
+      this.oldSwitch = this.isDarkMode;
     },
+
     /**
      * Rebond de la caméra de la scène 3D
      */
@@ -96,10 +130,12 @@ export default {
   },
   mounted() {
     window.addEventListener("resize", this.changeDimensions);
+
     /**
      * Configuration de la scène
      */
-    const PATH_TO_MODEL = "portfolioSpot.glb";
+    const PATH_TO_MODEL = "model/portfolioSpot.glb";
+    const PATH_TO_TEXTURES = "model/textures/";
     const CANVA_SIZE = [350, 250]; //A virer
     const IS_ALPHA = true;
     const USE_ANTIALIASING = true;
@@ -117,10 +153,9 @@ export default {
      * Initialisation de la scène
      */
     this.scene = new THREE.Scene();
-    // this.scene.background = new THREE.Color("skyblue");
 
     /**
-     * Initialisation du renderer
+     * Initialisation du moteur de rendu
      */
     this.render = new THREE.WebGLRenderer({
       alpha: IS_ALPHA,
@@ -129,8 +164,28 @@ export default {
     this.render.setSize(CANVA_SIZE[0], CANVA_SIZE[1]);
     /** Pour de meilleurs couleurs */
     this.render.outputEncoding = THREE.sRGBEncoding;
-    this.render.setPixelRatio(window.devicePixelRatio); //on test
+    this.render.setPixelRatio(window.devicePixelRatio);
     this.render.setSize(window.innerWidth, window.innerHeight);
+
+    /**
+     * Chargement des textures
+     * todo: use webpack & optimisation
+     */
+    const textureLoader = new THREE.TextureLoader();
+    this.textures = [
+      textureLoader.load(
+        //    require( "../assets/logo.png" )
+        PATH_TO_TEXTURES + "light_texture.png"
+      ),
+      textureLoader.load(PATH_TO_TEXTURES + "dark_1.png"),
+      textureLoader.load(PATH_TO_TEXTURES + "dark_2.png"),
+    ];
+
+    this.textures.forEach((texture) => {
+      //Obtenir un meilleur rendu.
+      texture.encoding = THREE.sRGBEncoding;
+      texture.flipY = false;
+    });
 
     /**
      * Initialisation de la caméra
@@ -152,23 +207,25 @@ export default {
     this.camera.lookAt(0, -0.3, 0);
 
     /**
+     * Chargement du modèle 3D
+     */
+    const loader = new GLTFLoader();
+
+    loader.load(PATH_TO_MODEL, (gltf) => {
+      const model = gltf.scene;
+      model.position.set(0, -0.8, 0);
+      model.scale.set(1, 1, 1);
+      this.scene.add(model);
+
+    });
+
+    /**
      * Initialisation des lumières
      */
     const ambientLight = new THREE.AmbientLight(
       0xffffff,
       AMBIENT_LIGHT_INTENSITY
     );
-
-    /**
-     * Chargement du modèle 3D
-     */
-    const loader = new GLTFLoader();
-    loader.load(PATH_TO_MODEL, (gltf) => {
-      const modelPerso = gltf.scene;
-      modelPerso.position.set(0, -0.8, 0);
-      modelPerso.scale.set(1, 1, 1);
-      this.scene.add(modelPerso);
-    });
 
     /**
      * Initialisation des contrôles
