@@ -26,7 +26,6 @@
           <img :src="require(`../assets/img/git.png`)" alt="js-logo" style='max-width:150px'>
           <img :src="require(`../assets/img/vue.jpg`)" alt="js-logo" style='max-width:150px'>
           <img :src="require(`../assets/img/symfony.png`)" alt="js-logo" style='max-width:150px'>
-
           <img :src="require(`../assets/img/php.png`)" alt="js-logo" style='max-width:150px'>
 
         </div>

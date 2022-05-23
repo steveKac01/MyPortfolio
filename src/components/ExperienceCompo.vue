@@ -82,6 +82,7 @@ export default {
   width: 25%;
   padding: 0px;
   margin: 0px;
+  overflow: hidden;
 }
 
 ul {
@@ -108,9 +109,15 @@ li:nth-child(even) {
 }
 
 img {
-  box-sizing: border-box;
+ 
   width: 100%;
   height: 100%;
-  border: BLACK 1px solid;
+  /*border: BLACK 2px solid;*/
+}
+img:hover{
+   
+  transform: scale(1.12);
+
+   
 }
 </style>

@@ -6,7 +6,7 @@
           <div>
             <h2>Steve Kaci</h2>
           </div>
-          <div>Développeur Web | Dark mode : {{ isDarkMode }}</div>
+          <div>Développeur Web en devenir | Dark mode : {{ isDarkMode }}</div>
         </div>
         <div class="right">
           <div class="photo">
@@ -48,15 +48,46 @@ export default {
     modelScene: undefined,
     width: document.documentElement.clientWidth,
     height: document.documentElement.clientHeight,
-    // isSwitchingTheme: false,
-    oldSwitch: false, //test
+    //turnOffLight:false,
+    oldSwitch: false,
+    iFrameDark: 1, //mon tableau de texture sombre commence à 1 se termine a 2 pour le moment
+    timerSwitch:0
   }),
   methods: {
+
+    /**
+     * Animation du mode sombre, deux états possibles.
+     */
+    animateDarkMode() {
+      const SPEED_IFRAME = 1;
+      const LIMIT_SWITCH_FRAME = 20; //j'aimerais un random ici a modif
+      this.timerSwitch += SPEED_IFRAME;
+
+      // Changement de texture de la scène. 
+      if(this.timerSwitch>LIMIT_SWITCH_FRAME)
+      { 
+        //Changement de frame.
+        this.iFrameDark= this.iFrameDark == 1 ? 2 : 1
+
+        //reset du timer.
+        this.timerSwitch = 0
+      
+        //Changement de texture.
+        this.scene.children[1].children[1].material.map = this.textures[this.iFrameDark]
+      }
+    },
+
     /**
      * Change la texture de la scene 3D selon le thème sélectionné.
+     * Une limière omni diminue avant de passer au sombre.
      */
     switchTheme() {
+      // const SPEED_AMBIENT = 0.04
+      // const LIMIT_SWITCH_AMBIENT_LIGHT = 0.2
+
       if (this.isDarkMode) {
+        //get ambient light
+
         //Thème sombre
         this.applyTexture(1);
       }
@@ -101,8 +132,16 @@ export default {
      * La boucle principal de l'animation de la scène 3D
      */
     animate() {
+
+      //Changement de thème.
       if (this.oldSwitch != this.isDarkMode) {
         this.switchTheme();
+      }
+
+      //Animation du mode sombre.
+      if(this.isDarkMode)
+      {
+        this.animateDarkMode();
       }
 
       requestAnimationFrame(this.animate);
@@ -215,8 +254,7 @@ export default {
       const model = gltf.scene;
       model.position.set(0, -0.8, 0);
       model.scale.set(1, 1, 1);
-      this.scene.add(model);
-
+      this.scene.add(model); 
     });
 
     /**
@@ -319,7 +357,7 @@ h2 {
   }
 
   canvas {
-    overflow: unset;
+    /*overflow: unset;*/
   }
 
   .navBar {

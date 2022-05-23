@@ -1,7 +1,5 @@
 <template>
   <div id="app">
-
-
     <NavBar @onChangeTheme="handleSwitchTheme"></NavBar>
     <IntroScene :isDarkMode="this.isDarkMode"></IntroScene>
 
@@ -53,17 +51,17 @@ export default {
 
 <style>
 
+body{
+      overflow-x: hidden;
+}
 #section {
   padding: 2% 0 5% 0;
 }
-
 h1 {
   background: var(--title-frame);
-
   padding: 20px;
   color: var(--text-invert-color);
 }
-
 ul {
   list-style: none;
 }
