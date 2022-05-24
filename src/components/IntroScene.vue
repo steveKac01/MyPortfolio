@@ -1,12 +1,12 @@
 <template>
-  <div class="container-3d">
+  <div class="container-3d" id="about">
     <div class="container-about">
       <div class="intro">
         <div class="left">
           <div>
             <h2>Steve Kaci</h2>
           </div>
-          <div>Développeur Web en devenir | Dark mode : {{ isDarkMode }}</div>
+          <div class="sub-title">Développeur Web en devenir | </div>
         </div>
         <div class="right">
           <div class="photo">
@@ -165,7 +165,6 @@ export default {
      * Configuration de la scène
      */
     const PATH_TO_MODEL = "model/portfolioSpot.glb"
-   // const PATH_TO_TEXTURES = "../assets/scene/";
     const CANVA_SIZE = [350, 250]
     const IS_ALPHA = true
     const USE_ANTIALIASING = true
@@ -320,6 +319,10 @@ export default {
 h2 {
   font-size: 1.7em;
 }
+.sub-title{
+color:var(--text-secondary-color);
+
+}
 
 .left {
   font-size: 1.2em;
@@ -339,10 +342,6 @@ h2 {
 @media screen and (min-width: 768px) {
   .container-global {
     padding: 0 23%;
-  }
-
-  canvas {
-    /*overflow: unset;*/
   }
 
   .navBar {
@@ -366,4 +365,3 @@ h2 {
   }
 }
 </style>
- 

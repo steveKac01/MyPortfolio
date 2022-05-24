@@ -170,7 +170,7 @@ li:hover {
 .slide-cat {
   animation: fadein 1s;
   padding: 10px 30px;
-  background-color: var(--background-footer);
+  background-color: var(--background-slide);
   font-weight: bolder;
   text-transform: uppercase;
   border-radius: 5%;
@@ -208,10 +208,8 @@ li:hover {
 .left-items>div,
 .right-items>div {
   border: dotted 1px;
-
   padding: 3px;
   border-radius: 20%;
-
 }
 
 .right-items {

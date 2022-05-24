@@ -60,7 +60,7 @@ body{
 h1 {
   background: var(--title-frame);
   padding: 20px;
-  color: var(--text-invert-color);
+  color: var( --text-secondary-color) !important;
 }
 ul {
   list-style: none;
@@ -70,24 +70,11 @@ li {
   margin-bottom: 15px;
 }
 
-/*
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
-*/
 :root {
   --background-color: #cccccc;
   --text-color: #2b2929;
   --text-link: lightblue;
-  --background-slide: rgba(58, 137, 193, 0.6);
+
   --background-footer: #2c3e50;
   --text-invert-color: #cccccc;
   --title-frame: #2c3e507b;
@@ -98,8 +85,11 @@ nav a.router-link-exact-active {
   --text-focus: lightblue;
 
   /*NEW*/ 
-  --icon-color:black;
+  --icon-color:rgb(12, 76, 95);
   --main-link:rgba(25, 98, 129, 0.6);
+  --background-slide: rgba(25, 110, 170, 0.7);
+  --text-secondary-color:#2c3e50;
+
 }
 
 :root.dark-mode {
@@ -108,12 +98,14 @@ nav a.router-link-exact-active {
   --text-color: #cccccc;
   --text-invert-color: #000000;
   --text-link: white;
-  --background-slide: rgba(25, 110, 170, 0.5);
-  --background-footer: rgb(25, 110, 170);
+
+  
   
 /*NEW*/
---icon-color: rgb(212, 113, 8);
- --main-link:lightblue;
+  --icon-color: rgb(212, 113, 8);
+  --main-link:lightblue;
+   --background-slide: rgba(100, 100, 100, 0.5);
+   --text-secondary-color:rgb(175, 172, 172);
 }
 
 body {
@@ -122,7 +114,6 @@ body {
   background-color: var(--background-color);
   color: var(--text-color);
   transition: background-color 600ms ease-in;
-  /* easings.net/fr */
 }
 
 /* DYNAMIC CSS */
