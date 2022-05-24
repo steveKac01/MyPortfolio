@@ -60,19 +60,12 @@
 
 <script>
 export default {
-  name: 'ExperienceCompo',
-  props: {
-    isDarkMode: Boolean
-  },
-  methods: {
-
-  }
+  name: 'ExperienceCompo'
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-/* test skills*/
 .exp-row {
   display: flex;
   justify-content: flex-start;
@@ -103,21 +96,15 @@ li:nth-child(even) {
 }
 
 .formation-caroussel {
-  /*  check typo*/
-
   text-align: center;
 }
 
 img {
- 
   width: 100%;
   height: 100%;
-  /*border: BLACK 2px solid;*/
 }
-img:hover{
-   
-  transform: scale(1.12);
 
-   
+img:hover{
+  transform: scale(1.12);
 }
 </style>

@@ -21,6 +21,7 @@ figcaption {
 
 
 .project {
+    opacity: 0;
     display: flex;
     flex-direction: column;
     margin-bottom: 10%;

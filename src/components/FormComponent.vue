@@ -1,6 +1,5 @@
 <template>
     <div class="containerByCat">
-        <!--    <form   @submit.prevent="sendEmail" :class="hideForm ? 'hide' : ''"> -->
         <div class="success" :class="hideForm ? '' : 'hide'">
             <div>
                 <font-awesome-icon style="display:inline;margin-right:2px" icon="fas fa-check-circle " size="4x" />
@@ -27,7 +26,6 @@
                 <font-awesome-icon icon="fas fa-exclamation-circle" /> {{ messageError }}
             </div>
             <div class="send">
-               <!-- <button>ENVOYER</button>-->
                <button-project label="ENVOYER" :border="true"></button-project>
             </div>
         </form>
@@ -109,7 +107,7 @@ export default {
                         email: this.email,
                         message: this.message
                     }).then((result) => {
-                          this.hideForm = true; 
+                          this.hideForm = true
                           console.log("Email envoyé: "+result)
                     }, (error) => {
                         console.log("Une erreur est survenue: "+error.text);

@@ -24,6 +24,11 @@
 <script>
 import { projects } from "../assets/datas/projects"
 import ButtonProject from '../components/ButtonComponent.vue'
+import { gsap } from "gsap"
+import { PixiPlugin } from "gsap/PixiPlugin.js";
+import { MotionPathPlugin } from "gsap/MotionPathPlugin.js";
+import { ScrollTrigger } from "gsap/ScrollTrigger.js";
+gsap.registerPlugin(PixiPlugin, MotionPathPlugin, ScrollTrigger);
 
 export default {
     name: 'ProjetsCompo',
@@ -32,6 +37,10 @@ export default {
     },
     props: {
         isDarkMode: Boolean
+    },
+    mounted(){
+        let project = document.querySelectorAll(".project");
+          this.pierreQuiRoule(project);
     },
     data: () => ({
         projects: projects
@@ -46,7 +55,22 @@ export default {
         },
         goToProject(url) {
             this.$router.push({ name: url })
-        }
+        },
+        pierreQuiRoule(a){
+      for (let i = 0; i < a.length; i++) {
+        gsap.to(a[i], {
+          scrollTrigger: {
+            trigger: a[i],
+            start: "top center",
+            toggleActions: "play pause",
+          },
+          opacity:1,
+          ease: "power1.inOut",
+          duration: 0.5
+        })
+      }
+
+    }
     }
 }
 </script>

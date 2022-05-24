@@ -4,15 +4,15 @@
     <IntroScene :isDarkMode="this.isDarkMode"></IntroScene>
 
     <div id="section">
-      <ExperienceCompo :isDarkMode="this.isDarkMode"></ExperienceCompo>
+      <ExperienceCompo></ExperienceCompo>
       <div id="projects">
-        <h1>PROJETS {{ this.isDarkMode ? "Theme NUIT" : "theme JOUR" }}</h1>
+        <h1>PROJETS</h1>
     <!-- <transition name="router-anim" enter-active-class="animate__animated animate__fadeInRight" >--> 
        <router-view />
     <!-- </transition> -->
       </div>
     </div>
-    <FooterPortfolio :isDarkMode="this.isDarkMode"></FooterPortfolio>
+    <FooterPortfolio></FooterPortfolio>
 
   </div>
 </template>
@@ -96,6 +96,10 @@ nav a.router-link-exact-active {
   --alpha-background: rgba(5, 5, 5, 0.39);
   --error-color: red;
   --text-focus: lightblue;
+
+  /*NEW*/ 
+  --icon-color:black;
+  --main-link:rgba(25, 98, 129, 0.6);
 }
 
 :root.dark-mode {
@@ -106,15 +110,10 @@ nav a.router-link-exact-active {
   --text-link: white;
   --background-slide: rgba(25, 110, 170, 0.5);
   --background-footer: rgb(25, 110, 170);
+  
+/*NEW*/
+--icon-color: rgb(212, 113, 8);
 
-  /*
-  --text-invert-color: #000000;
-  --alpha-background: rgba(212, 212, 212, 0.2);
-  --title-frame: rgba(224, 216, 216, 0.678);
-  --text_link: white;
-  --text-color-highlight: #FFFFFF;
-  --background-slide: rgba(212, 212, 212, 0.5);
-*/
 }
 
 body {

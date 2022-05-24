@@ -10,7 +10,6 @@
         </div>
       </div>
       <div class="right-items btn-theme" @click="switchTheme()">
-        <!-- Double icone theme-->
         <div
           :style="this.isDarkMode ? 'animation: fadeout 1s ease-out forwards' : 'animation: fadein 1s ease-out forwards'">
           <font-awesome-icon icon="fas fa-moon" size="2x" />
@@ -25,10 +24,10 @@
       <div class="big-nav">
         <ul>
           <div>
-            <li @click="goAnchor('#about')">QUI SUIS-JE ?</li>
+            <li @click="goAnchor('#about')">A PROPOS DE MOI</li>
           </div>
           <div>
-            <li @click="goAnchor('#skills')">EXPERIENCES</li>
+            <li @click="goAnchor('#skills')">COMPETENCES</li>
           </div>
 
           <div>
@@ -51,7 +50,7 @@
             <li @click="goAnchor('#about')">
 
               <font-awesome-icon icon="fas fa-user-tie" />
-              | QUI SUIS-JE ?
+              | A PROPOS DE MOI
             </li>
             <hr>
             <li @click="goAnchor('#skills')">
@@ -209,10 +208,10 @@ li:hover {
 .left-items>div,
 .right-items>div {
   border: dotted 1px;
-  border-color: var(--background-footer);
+
   padding: 3px;
   border-radius: 20%;
-  color: var(--background-footer);
+
 }
 
 .right-items {
@@ -220,6 +219,12 @@ li:hover {
   align-items: center;
 }
 
+.btn-theme{
+  border-color: var(--icon-color);
+  color: var(--icon-color);
+
+}
+ 
 @keyframes fadein {
   from {
     opacity: 0;
@@ -283,7 +288,7 @@ li:hover {
   }
 
  .big-nav li:hover{
-    color: var(--text-focus);
+    color: var(--main-link);
   }
  
 }

@@ -26,9 +26,9 @@
 </template>
 
 <script>
-import * as THREE from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import * as THREE from "three"
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls"
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
 
 export default {
   name: "IntroScene",
@@ -48,32 +48,30 @@ export default {
     modelScene: undefined,
     width: document.documentElement.clientWidth,
     height: document.documentElement.clientHeight,
-    //turnOffLight:false,
     oldSwitch: false,
-    iFrameDark: 1, //mon tableau de texture sombre commence à 1 se termine a 2 pour le moment
-    timerSwitch:0
+    iFrameDark: 1,
+    timerSwitch: 0,
   }),
   methods: {
-
     /**
      * Animation du mode sombre, deux états possibles.
      */
     animateDarkMode() {
-      const SPEED_IFRAME = 1;
-      const LIMIT_SWITCH_FRAME = 120; //j'aimerais un random ici a modif
-      this.timerSwitch += SPEED_IFRAME;
+      const SPEED_IFRAME = 1
+      const LIMIT_SWITCH_FRAME = 120
+      this.timerSwitch += SPEED_IFRAME
 
-      // Changement de texture de la scène. 
-      if(this.timerSwitch>LIMIT_SWITCH_FRAME)
-      { 
+      // Changement de texture de la scène.
+      if (this.timerSwitch > LIMIT_SWITCH_FRAME) {
         //Changement de frame.
-        this.iFrameDark= this.iFrameDark == 1 ? 2 : 1
+        this.iFrameDark = this.iFrameDark == 1 ? 2 : 1
 
         //reset du timer.
         this.timerSwitch = 0
-      
+
         //Changement de texture.
-        this.scene.children[1].children[1].material.map = this.textures[this.iFrameDark]
+        this.scene.children[1].children[1].material.map =
+          this.textures[this.iFrameDark]
       }
     },
 
@@ -82,49 +80,44 @@ export default {
      * Une limière omni diminue avant de passer au sombre.
      */
     switchTheme() {
-      // const SPEED_AMBIENT = 0.04
-      // const LIMIT_SWITCH_AMBIENT_LIGHT = 0.2
-
       if (this.isDarkMode) {
-        //get ambient light
-
         //Thème sombre
-        this.applyTexture(1);
+        this.applyTexture(1)
       }
 
       if (!this.isDarkMode) {
         //Thème light
-        this.applyTexture(0);
+        this.applyTexture(0)
       }
     },
 
     applyTexture(itexture) {
-      this.scene.children[1].children[1].material.map = this.textures[itexture];
+      this.scene.children[1].children[1].material.map = this.textures[itexture]
     },
 
     /**
-     * Mise à jour de la taille de la scène 3D au redimensionnement de la fenêtre
+     * Mise à jour de la taille de la scène 3D
      */
     changeDimensions() {
-      const camFactor = 6;
+      const camFactor = 6
 
       if (window.innerHeight > window.innerWidth) {
         //mobile
-        this.render.setSize(window.innerWidth, window.innerHeight);
+        this.render.setSize(window.innerWidth, window.innerHeight)
       } else {
-        this.render.setSize(window.innerWidth, window.innerHeight);
+        this.render.setSize(window.innerWidth, window.innerHeight)
       }
       // update the camera
-      this.camera.left = -window.innerWidth / camFactor;
-      this.camera.right = window.innerWidth / camFactor;
-      this.camera.top = window.innerHeight / camFactor;
-      this.camera.bottom = -window.innerHeight / camFactor;
-      this.camera.updateProjectionMatrix();
+      this.camera.left = -window.innerWidth / camFactor
+      this.camera.right = window.innerWidth / camFactor
+      this.camera.top = window.innerHeight / camFactor
+      this.camera.bottom = -window.innerHeight / camFactor
+      this.camera.updateProjectionMatrix()
 
       if (window.innerWidth < 760) {
-        this.controls.enabled = false;
+        this.controls.enabled = false
       } else {
-        this.controls.enabled = true;
+        this.controls.enabled = true
       }
     },
 
@@ -132,23 +125,21 @@ export default {
      * La boucle principal de l'animation de la scène 3D
      */
     animate() {
-
       //Changement de thème.
       if (this.oldSwitch != this.isDarkMode) {
-        this.switchTheme();
+        this.switchTheme()
       }
 
       //Animation du mode sombre.
-      if(this.isDarkMode)
-      {
-        this.animateDarkMode();
+      if (this.isDarkMode) {
+        this.animateDarkMode()
       }
 
-      requestAnimationFrame(this.animate);
-      this.cameraRotateBounce();
-      this.controls.update();
-      this.render.render(this.scene, this.camera);
-      this.oldSwitch = this.isDarkMode;
+      requestAnimationFrame(this.animate)
+      this.cameraRotateBounce()
+      this.controls.update()
+      this.render.render(this.scene, this.camera)
+      this.oldSwitch = this.isDarkMode
     },
 
     /**
@@ -157,36 +148,34 @@ export default {
     cameraRotateBounce() {
       if (this.controls.getAzimuthalAngle() < -0.3) {
         if (this.controls.autoRotateSpeed > 0.0) {
-          this.controls.autoRotateSpeed *= -1;
+          this.controls.autoRotateSpeed *= -1
         }
       }
       if (this.controls.getAzimuthalAngle() > 0.55) {
         if (this.controls.autoRotateSpeed < 0.0) {
-          this.controls.autoRotateSpeed *= -1;
+          this.controls.autoRotateSpeed *= -1
         }
       }
     },
   },
   mounted() {
-    window.addEventListener("resize", this.changeDimensions);
+    window.addEventListener("resize", this.changeDimensions)
 
     /**
      * Configuration de la scène
      */
-    const PATH_TO_MODEL = "model/portfolioSpot.glb";
-    //const PATH_TO_TEXTURES = "./assets/scene/";
-    const CANVA_SIZE = [350, 250]; //A virer
-    const IS_ALPHA = true;
-    const USE_ANTIALIASING = true;
-    const AMBIENT_LIGHT_INTENSITY = 1;
-    //const SPEED_AMBIENT = 0.04;
-    //const LIMIT_SWITCH_AMBIENT_LIGHT = 0.2;
-    const CAMERA_ZOOM = 30;
-    const CAMERA_POSITION = [0.2603, 2.8707, 4.5465];
-    const IS_AUTO_ROTATE = true;
-    const SPEED_AUTO_ROTATE = 0.4;
-    const SPEED_USER_ROTATE = 0.05;
-    const IS_ZOOM_ENABLE = false;
+    const PATH_TO_MODEL = "model/portfolioSpot.glb"
+   // const PATH_TO_TEXTURES = "../assets/scene/";
+    const CANVA_SIZE = [350, 250]
+    const IS_ALPHA = true
+    const USE_ANTIALIASING = true
+    const AMBIENT_LIGHT_INTENSITY = 1
+    const CAMERA_ZOOM = 30
+    const CAMERA_POSITION = [0.2603, 2.8707, 4.5465]
+    const IS_AUTO_ROTATE = true
+    const SPEED_AUTO_ROTATE = 0.4
+    const SPEED_USER_ROTATE = 0.05
+    const IS_ZOOM_ENABLE = false
 
     /**
      * Initialisation de la scène
@@ -199,12 +188,11 @@ export default {
     this.render = new THREE.WebGLRenderer({
       alpha: IS_ALPHA,
       antialias: USE_ANTIALIASING,
-    });
-    this.render.setSize(CANVA_SIZE[0], CANVA_SIZE[1]);
-    /** Pour de meilleurs couleurs */
-    this.render.outputEncoding = THREE.sRGBEncoding;
-    this.render.setPixelRatio(window.devicePixelRatio);
-    this.render.setSize(window.innerWidth, window.innerHeight);
+    })
+    this.render.setSize(CANVA_SIZE[0], CANVA_SIZE[1])
+    this.render.outputEncoding = THREE.sRGBEncoding
+    this.render.setPixelRatio(window.devicePixelRatio)
+    this.render.setSize(window.innerWidth, window.innerHeight)
 
     /**
      * Chargement des textures
@@ -212,25 +200,16 @@ export default {
      */
     const textureLoader = new THREE.TextureLoader();
     this.textures = [
-      textureLoader.load(
-        require(`../assets/scene/light_texture.png`)
-   //     require(  PATH_TO_TEXTURES+"light_texture.png" )
-      //  PATH_TO_TEXTURES + "light_texture.png"
-      ),
+      textureLoader.load(require(`../assets/scene/light_texture.png`)),
       textureLoader.load(require(`../assets/scene/dark_1.png`)),
-       textureLoader.load(require(`../assets/scene/dark_6.png`))
-
-    
-
-    //  textureLoader.load(PATH_TO_TEXTURES + "dark_1.png"),
-    //  textureLoader.load(PATH_TO_TEXTURES + "dark_2.png"),
-    ];
+      textureLoader.load(require(`../assets/scene/dark_6.png`)),
+    ]
 
     this.textures.forEach((texture) => {
       //Obtenir un meilleur rendu.
       texture.encoding = THREE.sRGBEncoding;
       texture.flipY = false;
-    });
+    })
 
     /**
      * Initialisation de la caméra
@@ -242,12 +221,12 @@ export default {
       -CANVA_SIZE[1] / 2,
       1,
       1000
-    );
+    )
     this.camera.position.set(
       CAMERA_POSITION[0],
       CAMERA_POSITION[1],
       CAMERA_POSITION[2]
-    );
+    )
     this.camera.zoom = CAMERA_ZOOM;
     this.camera.lookAt(0, -0.3, 0);
 
@@ -260,8 +239,8 @@ export default {
       const model = gltf.scene;
       model.position.set(0, -0.8, 0);
       model.scale.set(1, 1, 1);
-      this.scene.add(model); 
-    });
+      this.scene.add(model);
+    })
 
     /**
      * Initialisation des lumières
@@ -269,43 +248,43 @@ export default {
     const ambientLight = new THREE.AmbientLight(
       0xffffff,
       AMBIENT_LIGHT_INTENSITY
-    );
+    )
 
     /**
      * Initialisation des contrôles
      */
-    this.controls = new OrbitControls(this.camera, this.render.domElement);
-    this.controls.enableDamping = true;
-    this.controls.enablePan = false;
-    this.controls.autoRotate = IS_AUTO_ROTATE;
-    this.controls.enableZoom = IS_ZOOM_ENABLE;
-    this.controls.autoRotateSpeed = SPEED_AUTO_ROTATE;
-    this.controls.rotateSpeed = SPEED_USER_ROTATE;
+    this.controls = new OrbitControls(this.camera, this.render.domElement)
+    this.controls.enableDamping = true
+    this.controls.enablePan = false
+    this.controls.autoRotate = IS_AUTO_ROTATE
+    this.controls.enableZoom = IS_ZOOM_ENABLE
+    this.controls.autoRotateSpeed = SPEED_AUTO_ROTATE
+    this.controls.rotateSpeed = SPEED_USER_ROTATE
 
     /**
      * Restriction de la caméra
      */
     /** Limitation Haut et bas de la caméra */
-    this.controls.maxPolarAngle = 1.06;
-    this.controls.minPolarAngle = 0.9287;
+    this.controls.maxPolarAngle = 1.06
+    this.controls.minPolarAngle = 0.9287
     /** Limitation gauche et droite de la caméra */
-    this.controls.maxAzimuthAngle = 0.565;
-    this.controls.minAzimuthAngle = -0.305;
+    this.controls.maxAzimuthAngle = 0.565
+    this.controls.minAzimuthAngle = -0.305
 
     /**
      * Ajouter les éléments à la scène et l'attacher au DOM
      */
-    this.scene.add(ambientLight);
-    const container = document.querySelector(".container-3d");
-    container.append(this.render.domElement);
+    this.scene.add(ambientLight)
+    const container = document.querySelector(".container-3d")
+    container.append(this.render.domElement)
 
     /**
      * Initialisation au chargement
      */
-    this.changeDimensions();
-    this.animate();
+    this.changeDimensions()
+    this.animate()
   },
-};
+}
 </script>
 
 

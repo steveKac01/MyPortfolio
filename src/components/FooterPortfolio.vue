@@ -8,7 +8,7 @@
            <div class="col-right"> 
           <ContactForm></ContactForm></div>
         </div>
-        <div><!-- void -->
+        <div>
         </div>
         <div id="contact-adress-container">
           
@@ -49,14 +49,9 @@ import ContactForm from './FormComponent.vue'
 
 export default {
   name: 'FooterPortfolio',
-  props: {
-    isDarkMode: Boolean
-  },
   components: {
     ContactForm
-  },
-  data: () => ({
-  })
+  }
 }
 </script>
 

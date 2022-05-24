@@ -1,7 +1,7 @@
 <template>
   <div id="skills">
 
-    <h1>EXPERIENCE {{ this.isDarkMode ? "Theme NUIT" : "theme JOUR" }}</h1>
+    <h1>EXPERIENCE</h1>
     <ul>
       <li>2022: Actuellement en recherche de stage.</li>
       <li>2021-2022: Formation développeur web et web mobile à la CCI lyon.</li>
