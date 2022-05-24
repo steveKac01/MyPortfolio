@@ -24,14 +24,14 @@ figcaption {
     flex-direction: column;
     margin-bottom: 10%;
     white-space: pre-line;
-    position: relative;
-    left: -1000px;
+ /*   position: relative;
+    left: -1000px;*/
 }
 
 .project:nth-child(even) {
-   left:unset;
+   /*left:unset;
    right: -1000px;
-}
+*/}
 
 
 
