@@ -12,7 +12,7 @@
 
             </div>
             <div class="input"><input type="text" name="user_name" placeholder="Nom/Prénom"
-                    :class="this.errors.name ? 'error-form' : ''" v-model="form.name">
+                    :class="this.errors.name ? 'error-form' : ''" v-model="form.name" >
 
                 <input type="email" name="user_email" placeholder="Email" v-model="form.email"
                     :class="this.errors.email ? 'error-form' : ''">

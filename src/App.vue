@@ -113,7 +113,7 @@ nav a.router-link-exact-active {
   
 /*NEW*/
 --icon-color: rgb(212, 113, 8);
-
+ --main-link:lightblue;
 }
 
 body {

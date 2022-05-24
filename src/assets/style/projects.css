@@ -18,15 +18,21 @@ figcaption {
     transform: scale(1.2);
 }
 
-
-
-.project {
+.project{
     opacity: 0;
     display: flex;
     flex-direction: column;
     margin-bottom: 10%;
     white-space: pre-line;
+    position: relative;
+    left: -1000px;
 }
+
+.project:nth-child(even) {
+   left:unset;
+   right: -1000px;
+}
+
 
 
 
