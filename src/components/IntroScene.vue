@@ -60,7 +60,7 @@ export default {
      */
     animateDarkMode() {
       const SPEED_IFRAME = 1;
-      const LIMIT_SWITCH_FRAME = 20; //j'aimerais un random ici a modif
+      const LIMIT_SWITCH_FRAME = 120; //j'aimerais un random ici a modif
       this.timerSwitch += SPEED_IFRAME;
 
       // Changement de texture de la scène. 
@@ -174,7 +174,7 @@ export default {
      * Configuration de la scène
      */
     const PATH_TO_MODEL = "model/portfolioSpot.glb";
-    const PATH_TO_TEXTURES = "model/textures/";
+    //const PATH_TO_TEXTURES = "./assets/scene/";
     const CANVA_SIZE = [350, 250]; //A virer
     const IS_ALPHA = true;
     const USE_ANTIALIASING = true;
@@ -213,11 +213,17 @@ export default {
     const textureLoader = new THREE.TextureLoader();
     this.textures = [
       textureLoader.load(
-        //    require( "../assets/logo.png" )
-        PATH_TO_TEXTURES + "light_texture.png"
+        require(`../assets/scene/light_texture.png`)
+   //     require(  PATH_TO_TEXTURES+"light_texture.png" )
+      //  PATH_TO_TEXTURES + "light_texture.png"
       ),
-      textureLoader.load(PATH_TO_TEXTURES + "dark_1.png"),
-      textureLoader.load(PATH_TO_TEXTURES + "dark_2.png"),
+      textureLoader.load(require(`../assets/scene/dark_1.png`)),
+       textureLoader.load(require(`../assets/scene/dark_6.png`))
+
+    
+
+    //  textureLoader.load(PATH_TO_TEXTURES + "dark_1.png"),
+    //  textureLoader.load(PATH_TO_TEXTURES + "dark_2.png"),
     ];
 
     this.textures.forEach((texture) => {

@@ -87,10 +87,16 @@ export default {
   }),
 
   methods: {
+    /**
+     * Scroll to the selector page & close the menu slide min.
+     * 
+     * @param {
+     * } selector  selector to scroll. debug this !! 
+     */
     goAnchor(selector) {
       console.log(selector)
       var anchor = document.querySelector(selector)
-       document.querySelector("#slide").classList.toggle("hide")
+      this.showSlideMenu = this.showSlideMenu ? false:false;
 
       window.scrollTo(0, anchor.offsetTop);
     },
