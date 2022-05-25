@@ -7,9 +7,8 @@
       <ExperienceCompo></ExperienceCompo>
       <div id="projects">
         <h1>PROJETS</h1>
-    <!-- <transition name="router-anim" enter-active-class="animate__animated animate__fadeInRight" >--> 
        <router-view />
-    <!-- </transition> -->
+    
       </div>
     </div>
     <FooterPortfolio></FooterPortfolio>
@@ -86,9 +85,6 @@ li {
   /* Validation */
   --background-slide: rgba(100, 100, 100, 0.5);
   --main-link:rgba(25, 98, 129, 0.6);
-
-
-
 }
 
 :root.dark-mode {
@@ -97,15 +93,9 @@ li {
   --text-color: #cccccc;
   --text-invert-color: #000000;
   --text-link: white;
-
-  
-  
-/*NEW*/
-  
    --text-secondary-color:rgb(175, 172, 172);
 
   /* Validation */
-
   --main-link:lightblue;
 
 }
