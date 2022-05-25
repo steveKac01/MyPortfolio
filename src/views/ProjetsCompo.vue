@@ -34,10 +34,10 @@
 <script>
 import { projects } from "../assets/datas/projects";
 import ButtonProject from "../components/ButtonComponent.vue";
-/*
+
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger.js";
-gsap.registerPlugin(ScrollTrigger);*/
+gsap.registerPlugin(ScrollTrigger);
 
 export default {
   name: "ProjetsCompo",
@@ -48,8 +48,8 @@ export default {
     isDarkMode: Boolean,
   },
   mounted() {
-  /*  let project = document.querySelectorAll(".project");
-    this.pierreQuiRoule(project);*/
+    let project = document.querySelectorAll(".project");
+    this.pierreQuiRoule(project);
   },
   data: () => ({
     projects: projects,
@@ -65,11 +65,11 @@ export default {
     goToProject(url) {
       this.$router.push({ name: url });
     },
-    /*
+    
     pierreQuiRoule(a) {
       for (let i = 0; i < a.length; i++) {
-       let translateX = 0;
-       translateX = i%2!=0 ? -1000:1000
+      // let translateX = 0;
+      // translateX = i%2!=0 ? -1000:1000
  
         gsap.to(a[i], {
           scrollTrigger: {
@@ -81,11 +81,11 @@ export default {
           ease: "power1.inOut",
           duration: 0.7,
 
-          x: translateX,
+        
         });
 
       }
-    }*/
+    }
   },
 };
 </script>

@@ -218,9 +218,8 @@ li:hover {
 }
 
 .btn-theme{
-  border-color: var(--icon-color);
-  color: var(--icon-color);
-
+  border-color: var(--main-link);
+  color: var(--main-link);
 }
  
 @keyframes fadein {

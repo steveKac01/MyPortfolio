@@ -114,11 +114,16 @@ export default {
       this.camera.bottom = -window.innerHeight / camFactor
       this.camera.updateProjectionMatrix()
 
+/**
+ * Disable camera control for mobile.
+ */
+
+/*
       if (window.innerWidth < 760) {
         this.controls.enabled = false
       } else {
         this.controls.enabled = true
-      }
+      }*/
     },
 
     /**
