@@ -85,6 +85,7 @@ li {
   /* Validation */
   --background-slide: rgba(100, 100, 100, 0.5);
   --main-link:rgba(25, 98, 129, 0.6);
+  --footer-txt:white;
 }
 
 :root.dark-mode {
@@ -97,6 +98,7 @@ li {
 
   /* Validation */
   --main-link:lightblue;
+    --footer-txt:white;
 
 }
 
