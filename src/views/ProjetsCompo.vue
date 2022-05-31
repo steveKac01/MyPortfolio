@@ -1,6 +1,7 @@
 <template>
   <div class="project-container">
-    <div class="project" v-for="(project, idx) in projects" :key="idx">
+   <div class="project-background" v-for="(project, idx) in projects" :key="idx">
+   <div class="project" >
       <div class="project-img">
         <img :src="getImg(idx)" :alt="project.title" />
       </div>
@@ -28,13 +29,13 @@
         </div>
       </div>
     </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { projects } from "../assets/datas/projects";
 import ButtonProject from "../components/ButtonComponent.vue";
-
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger.js";
 gsap.registerPlugin(ScrollTrigger);
@@ -68,8 +69,6 @@ export default {
     
     pierreQuiRoule(a) {
       for (let i = 0; i < a.length; i++) {
-      // let translateX = 0;
-      // translateX = i%2!=0 ? -1000:1000
  
         gsap.to(a[i], {
           scrollTrigger: {

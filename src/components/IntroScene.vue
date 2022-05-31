@@ -51,23 +51,33 @@ export default {
     oldSwitch: false,
     iFrameDark: 1,
     timerSwitch: 0,
+    switchFrameDark:0
   }),
   methods: {
+/**
+ * Obtenir un nombre aléatoire pour switch de frame en mode sombre.
+ */
+getRandomSwitchFrameTimer() {
+  const min = 80
+  const max = 200
+  return Math.floor(Math.random() * (max - min + 1) + min); 
+},
+
     /**
      * Animation du mode sombre, deux états possibles.
      */
     animateDarkMode() {
       const SPEED_IFRAME = 1
-      const LIMIT_SWITCH_FRAME = 120
       this.timerSwitch += SPEED_IFRAME
 
       // Changement de texture de la scène.
-      if (this.timerSwitch > LIMIT_SWITCH_FRAME) {
+      if (this.timerSwitch > this.switchFrameDark) {
         //Changement de frame.
         this.iFrameDark = this.iFrameDark == 1 ? 2 : 1
 
         //reset du timer.
         this.timerSwitch = 0
+        this.switchFrameDark = this.getRandomSwitchFrameTimer()
 
         //Changement de texture.
         this.scene.children[1].children[1].material.map =
@@ -81,18 +91,22 @@ export default {
      */
     switchTheme() {
       if (this.isDarkMode) {
-        //Thème sombre
+        //Thème dark
         this.applyTexture(1)
       }
 
       if (!this.isDarkMode) {
-        //Thème light
+        //Thème daytime
         this.applyTexture(0)
       }
     },
 
-    applyTexture(itexture) {
-      this.scene.children[1].children[1].material.map = this.textures[itexture]
+    /**
+     * Modifie la texture du modèle.
+     * iTexture l'index de la texture à appliquer.
+     */
+    applyTexture(iTexture) {
+      this.scene.children[1].children[1].material.map = this.textures[iTexture]
     },
 
     /**
@@ -107,7 +121,7 @@ export default {
       } else {
         this.render.setSize(window.innerWidth, window.innerHeight)
       }
-      // update the camera
+      // maj de la camera
       this.camera.left = -window.innerWidth / camFactor
       this.camera.right = window.innerWidth / camFactor
       this.camera.top = window.innerHeight / camFactor
@@ -115,7 +129,7 @@ export default {
       this.camera.updateProjectionMatrix()
 
 /**
- * Disable camera control for mobile.
+ * Disable la caméra pour le mobile.
  */
 
 /*
@@ -179,7 +193,8 @@ export default {
     const IS_AUTO_ROTATE = true
     const SPEED_AUTO_ROTATE = 0.4
     const SPEED_USER_ROTATE = 0.05
-    const IS_ZOOM_ENABLE = false
+    const IS_ZOOM_ENABLED = false
+    this.switchFrameDark = this.getRandomSwitchFrameTimer()
 
     /**
      * Initialisation de la scène
@@ -261,7 +276,7 @@ export default {
     this.controls.enableDamping = true
     this.controls.enablePan = false
     this.controls.autoRotate = IS_AUTO_ROTATE
-    this.controls.enableZoom = IS_ZOOM_ENABLE
+    this.controls.enableZoom = IS_ZOOM_ENABLED
     this.controls.autoRotateSpeed = SPEED_AUTO_ROTATE
     this.controls.rotateSpeed = SPEED_USER_ROTATE
 

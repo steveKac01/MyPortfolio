@@ -1,5 +1,3 @@
-
-
 img {
     opacity: 100%;
     transition: ease-out 1s;
@@ -18,24 +16,22 @@ figcaption {
     transform: scale(1.2);
 }
 
-
-
+.project-background{
+    background-color: var(--alpha-background);
+    border-radius: 1%;
+}
 .project {
     opacity: 0;
     display: flex;
     flex-direction: column;
     margin-bottom: 10%;
     white-space: pre-line;
+    color: white;
 }
-
-
-
 h4 {
     margin-top: 0;
     font-size: 1.3rem;
 }
-
-
 
 .desc-project {
     padding: 20px;
@@ -44,7 +40,7 @@ h4 {
 .project-img {
     padding: 10px;
     width: 250px;
-margin: auto;
+    margin: auto;
 }
 
 img {
