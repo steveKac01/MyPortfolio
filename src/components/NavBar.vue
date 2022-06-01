@@ -1,5 +1,4 @@
 <template>
-
   <header>
     <div class="top-bar">
       <div class="left-items" @click="showSlideMenu = !showSlideMenu">
@@ -11,11 +10,21 @@
       </div>
       <div class="right-items btn-theme" @click="switchTheme()">
         <div
-          :style="this.isDarkMode ? 'animation: fadeout 1s ease-out forwards' : 'animation: fadein 1s ease-out forwards'">
+          :style="
+            this.isDarkMode
+              ? 'animation: fadeout 1s ease-out forwards'
+              : 'animation: fadein 1s ease-out forwards'
+          "
+        >
           <font-awesome-icon icon="fas fa-moon" size="2x" />
         </div>
         <div
-          :style="this.isDarkMode ? 'animation: fadein 1s ease-out forwards' : 'animation: fadeout 1s ease-out forwards'">
+          :style="
+            this.isDarkMode
+              ? 'animation: fadein 1s ease-out forwards'
+              : 'animation: fadeout 1s ease-out forwards'
+          "
+        >
           <font-awesome-icon icon="fas fa-sun " size="2x" />
         </div>
       </div>
@@ -33,90 +42,84 @@
           <div>
             <li @click="goAnchor('#projects')">PROJETS</li>
           </div>
-            
           <div>
             <li @click="goAnchor('#contact')">CONTACT</li>
           </div>
-
         </ul>
       </div>
     </div>
-    
+
     <div class="slide-container">
       <Transition>
-      <div id="slide" v-if="showSlideMenu">
-        <div class="slide-cat">
-          <ul>
-            <li @click="goAnchor('#about')">
-
-              <font-awesome-icon icon="fas fa-user-tie" />
-              | A PROPOS DE MOI
-            </li>
-            <hr>
-            <li @click="goAnchor('#skills')">
-              <font-awesome-icon icon="fas fa-cog" />
-              | COMPETENCES
-            </li>
-            <hr>
-            <li @click="goAnchor('#projects')">
-              <font-awesome-icon icon="fas fa-folder " />
-              | PROJETS
-            </li>
-            <hr>
-            <li @click="goAnchor('#contact')">
-              <font-awesome-icon icon="fas fa-address-book" />
-              | CONTACT
-            </li>
-          </ul>
-        </div>
-      </div></Transition>
+        <div id="slide" v-if="showSlideMenu">
+          <div class="slide-cat">
+            <ul>
+              <li @click="goAnchor('#about')">
+                <font-awesome-icon icon="fas fa-user-tie" />
+                | A PROPOS DE MOI
+              </li>
+              <hr />
+              <li @click="goAnchor('#skills')">
+                <font-awesome-icon icon="fas fa-cog" />
+                | COMPETENCES
+              </li>
+              <hr />
+              <li @click="goAnchor('#projects')">
+                <font-awesome-icon icon="fas fa-folder " />
+                | PROJETS
+              </li>
+              <hr />
+              <li @click="goAnchor('#contact')">
+                <font-awesome-icon icon="fas fa-address-book" />
+                | CONTACT
+              </li>
+            </ul>
+          </div>
+        </div></Transition
+      >
     </div>
-    
-
   </header>
 </template>
 
 
 <script>
 export default {
-  name: 'NavBar',
+  name: "NavBar",
   data: () => ({
     isDarkMode: false,
-    showSlideMenu: false
+    showSlideMenu: false,
   }),
 
   methods: {
     /**
      * Scroll to the selector page & close the menu slide min.
-     * 
+     *
      * @param {
-     * } selector  selector to scroll. debug this !! 
+     * } selector  selector to scroll. debug this !!
      */
     goAnchor(selector) {
-      console.log(selector)
-      var anchor = document.querySelector(selector)
-      this.showSlideMenu = this.showSlideMenu ? false:false;
-
+      var anchor = document.querySelector(selector);
+      this.showSlideMenu = this.showSlideMenu ? false : false;
       window.scrollTo(0, anchor.offsetTop);
     },
     switchTheme() {
       if (this.isDarkMode) {
         this.isDarkMode = false;
       } else {
-        this.isDarkMode = true
+        this.isDarkMode = true;
       }
-      this.$emit("onChangeTheme", { isDarkTheme: this.isDarkMode })
-    }
-  }
-}
+      this.$emit("onChangeTheme", { isDarkTheme: this.isDarkMode });
+    },
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@800&family=VT323&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@800&family=VT323&display=swap");
 
 header {
-  font-family: 'Raleway', sans-serif;
+  font-family: "Raleway", sans-serif;
 }
 
 li:hover {
@@ -159,12 +162,11 @@ li:hover {
   position: relative;
 }
 
-.slide-container>div {
+.slide-container > div {
   position: absolute;
   bottom: -80;
   left: 2%;
   z-index: 2;
-
 }
 
 .slide-cat {
@@ -205,8 +207,8 @@ li:hover {
   cursor: pointer;
 }
 
-.left-items>div,
-.right-items>div {
+.left-items > div,
+.right-items > div {
   border: dotted 1px;
   padding: 3px;
   border-radius: 20%;
@@ -217,11 +219,11 @@ li:hover {
   align-items: center;
 }
 
-.btn-theme{
+.btn-theme {
   border-color: var(--main-link);
   color: var(--main-link);
 }
- 
+
 @keyframes fadein {
   from {
     opacity: 0;
@@ -269,7 +271,7 @@ li:hover {
     margin-right: 15px;
   }
 
-  .big-nav>ul {
+  .big-nav > ul {
     list-style: none;
     display: inline;
     display: flex;
@@ -281,13 +283,33 @@ li:hover {
   .big-nav li {
     display: inline;
     padding: 15px;
+
     cursor: pointer;
+    position: relative;
+    transition: color 1s;
   }
 
- .big-nav li:hover{
+  .big-nav li:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    transform: scaleY(0);
+    height: 4px;
+    bottom: 3px;
+    left: 0;
+    background-color: var(--main-link);
+    transform-origin: bottom right;
+    transition: transform 0.50s ease-out;
+  }
+
+  .big-nav li:hover:after {
+    transform: scaleY(1);
+    transform-origin: bottom left;
+  }
+
+  .big-nav li:hover {
     color: var(--main-link);
   }
- 
 }
 
 /*icons*/
@@ -296,14 +318,12 @@ li:hover {
   width: 45px;
 }
 
-.right-items>div {
+.right-items > div {
   left: 0;
   position: absolute;
 }
 
-
-/* */
-
+/* Transitions menu slide */
 .v-enter-active,
 .v-leave-active {
   transition: opacity 0.5s ease;

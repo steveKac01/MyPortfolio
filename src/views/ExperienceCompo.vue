@@ -31,18 +31,42 @@
 
       </div>
     </ul>
-
+ 
   </div>
 </template>
 
 <script>
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger.js";
+gsap.registerPlugin(ScrollTrigger);
+
 export default {
   name: 'ExperienceCompo',
   props: {
     isDarkMode: Boolean
   },
   methods: {
-
+animationTiles(tile){
+ 
+      for (let i = 0; i < elem.length; i++) {
+        gsap.to(elem[i], {
+          scrollTrigger: {
+            trigger: elem[i],
+            start: "0 90%",
+            toggleActions: "play",
+          },
+          opacity: 1,
+          ease: "power1.inOut",
+          duration: 0.7,
+          y: -200,
+        });
+      }
+    
+}
+  },
+  mounted(){
+    let skills = document.querySelectorAll(".skills");
+    this.animationTiles(skills);
   }
 }
 </script>

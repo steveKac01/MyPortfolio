@@ -1,6 +1,6 @@
 <template>
 
-<div id="projects">
+<div id="projects" class="TEST">
         <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero tenetur omnis cumque praesentium dolorum
             accusamus cupiditate dolore nam impedit vel? Inventore pariatur asperiores natus itaque vel reprehenderit
@@ -18,14 +18,40 @@
 </template>
 
 <script>
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger.js";
+gsap.registerPlugin(ScrollTrigger);
 
 export default {
     name: 'Project1View',
     methods: {
         goBack() {
             this.$router.push("/");
+        },
+        /* pierreQuiRoule(a) {
+      
+        gsap.to(a, {
+          scrollTrigger: {
+            trigger: a,
+            start: "0 70%",
+            toggleActions: "play",
+          },
+          opacity: 1,
+          ease: "power1.inOut",
+          duration: 7, 
         }
-    }
+       
+        );
+
+      
+    } */
+    }, mounted() {
+   // let proj = document.querySelector(".TEST");
+   // this.pierreQuiRoule(proj);
+  },
+  data: () => ({
+
+  })
 }
 
 </script>

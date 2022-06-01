@@ -7,22 +7,19 @@
       <ExperienceCompo></ExperienceCompo>
       <div id="projects">
         <h1>PROJETS</h1>
-       <router-view />
-    
+          <router-view />
       </div>
     </div>
     <FooterPortfolio></FooterPortfolio>
-
   </div>
 </template>
 
 <script>
-
-import NavBar from "./components/NavBar.vue"
-import IntroScene from "./components/IntroScene.vue"
-import FooterPortfolio from "./components/FooterPortfolio.vue"
-import ExperienceCompo from "./components/ExperienceCompo.vue"
-import 'animate.css'
+import NavBar from "./components/NavBar.vue";
+import IntroScene from "./components/IntroScene.vue";
+import FooterPortfolio from "./components/FooterPortfolio.vue";
+import ExperienceCompo from "./components/ExperienceCompo.vue";
+import "animate.css";
 
 export default {
   components: {
@@ -33,21 +30,20 @@ export default {
   },
   data: () => ({
     isDarkMode: false,
-
   }),
   methods: {
     handleSwitchTheme(payload) {
-      this.isDarkMode = payload.isDarkTheme
-      document.documentElement.classList.toggle("dark-mode") //Switch css
-    }
-  }
-}
+      this.isDarkMode = payload.isDarkTheme;
+      document.documentElement.classList.toggle("dark-mode"); //Switch css
+    },
+  },
+};
 </script>
 
 
 <style>
-body{
-      overflow-x: hidden;
+body {
+  overflow-x: hidden;
 }
 #section {
   padding: 2% 0 5% 0;
@@ -55,7 +51,7 @@ body{
 h1 {
   background: var(--title-frame);
   padding: 20px;
-  color: var( --text-secondary-color) !important;
+  color: var(--text-secondary-color) !important;
 }
 ul {
   list-style: none;
@@ -79,13 +75,14 @@ li {
   --error-color: red;
   --text-focus: lightblue;
 
-  /*NEW*/ 
-  --text-secondary-color:white;
-  --project-backround:#acabab;
+  /*NEW*/
+  --text-secondary-color: white;
+  --project-backround: #acabab;
+  --skills-color: white;
   /* Validation */
   --background-slide: rgba(100, 100, 100, 0.5);
-  --main-link:rgba(25, 98, 129, 0.6);
-  --footer-txt:white;
+  --main-link: rgba(25, 98, 129, 0.6);
+  --footer-txt: white;
 }
 
 :root.dark-mode {
@@ -94,12 +91,14 @@ li {
   --text-color: #cccccc;
   --text-invert-color: #000000;
   --text-link: white;
-   --text-secondary-color:rgb(175, 172, 172);
+  --text-secondary-color: rgb(175, 172, 172);
 
+  /* NEW */
+  --skills-color: #2b2929;
   /* Validation */
-  --main-link:lightblue;
-    --footer-txt:white;
---project-backround:#383838;
+  --main-link: lightblue;
+  --footer-txt: white;
+  --project-backround: #383838;
 }
 
 body {
@@ -121,7 +120,7 @@ h1 {
 
 @media screen and (min-width: 768px) {
   #section {
-    padding: 2% 5% 8% ;
+    padding: 2% 5% 8%;
   }
 }
 

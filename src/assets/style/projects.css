@@ -19,14 +19,18 @@ figcaption {
 .project-background{
     background-color: var(--alpha-background);
     border-radius: 1%;
+    position: relative;
+    top: 200px;
+    opacity: 0;
 }
 .project {
-    opacity: 0;
+ 
     display: flex;
     flex-direction: column;
     margin-bottom: 10%;
     white-space: pre-line;
     color: white;
+    
 }
 h4 {
     margin-top: 0;
@@ -82,8 +86,6 @@ p{
     }
     .project:nth-of-type(even) .buttons {
        text-align: left;
-       
-
     }
  
 
