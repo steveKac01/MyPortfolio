@@ -42,6 +42,9 @@ export default {
 
 
 <style>
+html{
+  scroll-behavior: smo;
+}
 body {
   overflow-x: hidden;
 }
@@ -64,7 +67,7 @@ li {
 :root {
   --background-color: #cccccc;
   --text-color: #2b2929;
-  --text-link: lightblue;
+  --text-link: rgb(194, 230, 173);
 
   --background-footer: #2c3e50;
   --text-invert-color: #cccccc;

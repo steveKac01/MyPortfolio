@@ -52,6 +52,10 @@ export default {
     iFrameDark: 1,
     timerSwitch: 0,
     switchFrameDark: 0,
+    //Anim
+    clock:new THREE.Clock,
+    mixer:undefined,
+
   }),
   methods: {
     /**
@@ -88,7 +92,7 @@ export default {
         this.switchFrameDark = this.getRandomSwitchFrameTimer();
 
         //Changement de texture.
-        this.scene.children[1].children[1].material.map =
+        this.scene.children[1].children[2].material.map =
           this.textures[this.iFrameDark];
       }
     },
@@ -116,7 +120,7 @@ export default {
      * iTexture l'index de la texture à appliquer.
      */
     applyTexture(iTexture) {
-      this.scene.children[1].children[1].material.map = this.textures[iTexture];
+      this.scene.children[1].children[2].material.map = this.textures[iTexture];
     },
 
     /**
@@ -159,6 +163,12 @@ export default {
         this.switchTheme();
       }
 
+    if(this.mixer){
+      
+       this.mixer.update(this.clock.getDelta());
+      // console.log(this.mixer)
+    }
+
       //Animation du mode sombre.
       if (this.isDarkMode) {
         this.animateDarkMode();
@@ -170,8 +180,9 @@ export default {
       this.render.render(this.scene, this.camera);
       this.oldSwitch = this.isDarkMode;
 
-      //Animation des bras.
-
+      //Animation de la plante de merde
+      // this.mixer = new THREE.AnimationMixer(model);
+    //console.log(this.mixerPlante)
       //todo :|
     },
 
@@ -195,10 +206,11 @@ export default {
   mounted() {
     window.addEventListener("resize", this.changeDimensions);
 
+this.horloge = new THREE.Clock()
     /**
      * Configuration de la scène
      */
-    const PATH_TO_MODEL = "model/portfolioSpot.glb";
+    const PATH_TO_MODEL = "model/portfolioSpottest.glb";
     const CANVA_SIZE = [350, 250];
     const IS_ALPHA = true;
     const USE_ANTIALIASING = true;
@@ -269,13 +281,38 @@ export default {
      */
     const loader = new GLTFLoader();
 
+  
+
     loader.load(PATH_TO_MODEL, (gltf) => {
       const model = gltf.scene;
       model.position.set(0, -0.8, 0);
       model.scale.set(1, 1, 1);
-      this.scene.add(model);
-    });
+   
+ 
+this.scene.add(model);
 
+   this.mixer = new THREE.AnimationMixer(model);
+ //let test = new THREE.AnimationMixer(model);
+   let fileAnimations = gltf.animations;  
+ 
+  let clip = THREE.AnimationClip.findByName(fileAnimations, "plante-move");
+   clip = this.mixer.clipAction(clip);
+   //let lol= test.clipAction(clip);
+   //lol.play();
+   //console.log(test)
+    clip.play();
+    console.log(this.mixer)
+    });  
+ 
+ 
+  //animations
+  /*
+ mixer = new THREE.AnimationMixer(this.scene.children[1]);
+  console.log("false")
+ console.log(mixer)
+*/
+
+ //console.log(this.scene)
     /**
      * Initialisation des lumières
      */
@@ -314,7 +351,13 @@ export default {
      */
     this.changeDimensions();
     this.animate();
+  
+console.log(this.scene)
   },
+  Animation()
+  {
+    
+  }
 };
 </script>
 

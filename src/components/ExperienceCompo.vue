@@ -88,7 +88,7 @@ animationTiles(tiles){
  * Tiles's Back animation. 
  */
 animationTilesBack(tiles){ 
-      for (let i = tiles.length; i >0 ; i--) {
+      for (let i = tiles.length; i >=0 ; i--) {
         gsap.to(tiles[i], {
           scrollTrigger: {
             trigger: tiles[i],
