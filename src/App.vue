@@ -43,7 +43,7 @@ export default {
 
 <style>
 html{
-  scroll-behavior: smo;
+  scroll-behavior: smooth;
 }
 body {
   overflow-x: hidden;

@@ -1,5 +1,5 @@
 <template>
-  <div class="container-3d" id="about">
+  <div class="container-3d" id="about"  @mousemove="mouseMove">
     <div class="container-about">
       <div class="intro">
         <div class="left">
@@ -52,10 +52,13 @@ export default {
     iFrameDark: 1,
     timerSwitch: 0,
     switchFrameDark: 0,
-    //Anim
-    clock:new THREE.Clock,
-    mixer:undefined,
-
+    clock: new THREE.Clock(),
+    clock2: new THREE.Clock(),
+    mixer: undefined,    
+    mixer2: undefined,
+//SOURIS ANIMATION
+    mouse:undefined,
+    neck:undefined,
   }),
   methods: {
     /**
@@ -92,7 +95,7 @@ export default {
         this.switchFrameDark = this.getRandomSwitchFrameTimer();
 
         //Changement de texture.
-        this.scene.children[1].children[2].material.map =
+        this.scene.children[1].children[3].material.map =
           this.textures[this.iFrameDark];
       }
     },
@@ -111,7 +114,6 @@ export default {
         //Thème daytime
         this.applyTexture(0);
         this.scene.children[0].intensity = 1;
-
       }
     },
 
@@ -120,7 +122,7 @@ export default {
      * iTexture l'index de la texture à appliquer.
      */
     applyTexture(iTexture) {
-      this.scene.children[1].children[2].material.map = this.textures[iTexture];
+      this.scene.children[1].children[3].material.map = this.textures[iTexture];
     },
 
     /**
@@ -158,16 +160,17 @@ export default {
      * La boucle principal de l'animation de la scène 3D
      */
     animate() {
+ 
       //Changement de thème.
       if (this.oldSwitch != this.isDarkMode) {
         this.switchTheme();
       }
 
-    if(this.mixer){
-      
-       this.mixer.update(this.clock.getDelta());
-      // console.log(this.mixer)
-    }
+      //Animations.
+      if (this.mixer) {
+        this.mixer.update(this.clock.getDelta());
+        this.mixer2.update(this.clock2.getDelta());
+      }
 
       //Animation du mode sombre.
       if (this.isDarkMode) {
@@ -182,7 +185,7 @@ export default {
 
       //Animation de la plante de merde
       // this.mixer = new THREE.AnimationMixer(model);
-    //console.log(this.mixerPlante)
+      //console.log(this.mixerPlante)
       //todo :|
     },
 
@@ -201,16 +204,84 @@ export default {
         }
       }
     },
+    /**
+     * TEST SOURIS a enlever todo
+     */
+      mouseEnter() {
+                console.log('mouseneter');
+                this.popup = true;
+                this.$el.addEventListener('mousemove', this.mouseMove());
+            },
+            mouseLeave() {
+                console.log('mouseleave');
+                this.popup = false;
+                this.$el.removeEventListener('mousemove', this.mouseMove());
+            },
+            mouseMove() {
+             this.mouse ={ x:event.clientX, y:event.clientY}
+              if(this.neck){
+               this.moveBone(this.mouse,this.neck,40,30)
+              }
+
+            },
+ moveBone(mouse, bone, degreeLimitX, degreeLimitY) {
+  let degrees = this.getMouseDegrees(mouse.x, mouse.y, degreeLimitX, degreeLimitY);
+  bone.rotation.y = THREE.Math.degToRad(degrees.x);
+  bone.rotation.x = THREE.Math.degToRad(degrees.y);
+},
+getMouseDegrees(x, y,  degreeLimitX, degreeLimitY) {
+  let dx = 0,
+      dy = 0,
+      xdiff,
+      xPercentage,
+      ydiff,
+      yPercentage;
+
+  let w = { x: window.innerWidth, y: window.innerHeight };
+
+// Tête regarde à gauche (rotation entre 0 et - degreeLimitX)
+  
+   // 1. If cursor is in the left half of screen
+  if (x <= w.x / 2) {
+    // 2. Get the difference between middle of screen and cursor position
+    xdiff = w.x / 2 - x;  
+    // 3. Find the percentage of that difference (percentage toward edge of screen)
+    xPercentage = (xdiff / (w.x / 2)) * 100;
+    // 4. Convert that to a percentage of the maximum rotation we allow for the neck
+    dx = ((degreeLimitX * xPercentage) / 100) * -1; }
+// Tête regarde à droite (rotation entre 0 et degreeLimitX)
+  if (x >= w.x / 2) {
+    xdiff = x - w.x / 2;
+    xPercentage = (xdiff / (w.x / 2)) * 100;
+    dx = (degreeLimitX * xPercentage) / 100;
+  }
+
+  // Tête levée (entre 0 et -degreeLimitY)
+  if (y <= w.y / 2) {
+    ydiff = w.y / 2 - y;
+    yPercentage = (ydiff / (w.y / 2)) * 100;
+    // Je multiplie les degrés limites pour faire monter la tête plus haut
+    dy = (((degreeLimitY * 1.5) * yPercentage) / 100) * -1;
+    }
+  
+  // Tête baissée (entre 0 et degreeLimitY)
+  if (y >= w.y / 2) {
+    ydiff = y - w.y / 2;
+    yPercentage = (ydiff / (w.y / 2)) * 100;
+    dy = ((degreeLimitY*0 ) * yPercentage) / 100;
+  }
+  return { x: dx, y: dy };
+}
+
   },
 
   mounted() {
     window.addEventListener("resize", this.changeDimensions);
-
-this.horloge = new THREE.Clock()
+ 
     /**
      * Configuration de la scène
      */
-    const PATH_TO_MODEL = "model/portfolioSpottest.glb";
+    const PATH_TO_MODEL = "model/portfolioSpotAnimation.glb";
     const CANVA_SIZE = [350, 250];
     const IS_ALPHA = true;
     const USE_ANTIALIASING = true;
@@ -281,42 +352,51 @@ this.horloge = new THREE.Clock()
      */
     const loader = new GLTFLoader();
 
-  
-
     loader.load(PATH_TO_MODEL, (gltf) => {
       const model = gltf.scene;
       model.position.set(0, -0.8, 0);
       model.scale.set(1, 1, 1);
-   
- 
-this.scene.add(model);
 
-   this.mixer = new THREE.AnimationMixer(model);
- //let test = new THREE.AnimationMixer(model);
-   let fileAnimations = gltf.animations;  
+      this.scene.add(model);
+
+      this.mixer = new THREE.AnimationMixer(model);
+      this.mixer2 = new THREE.AnimationMixer(model);
+
+      //let test = new THREE.AnimationMixer(model);
+      let fileAnimations = gltf.animations;
+      let fileAnimations2 = gltf.animations;
+
+      let clip2 = THREE.AnimationClip.findByName(fileAnimations2, "plante-move");
+        let clip = THREE.AnimationClip.findByName(fileAnimations, "perso-idle");
+        
+      clip = this.mixer.clipAction(clip);
+      clip2 = this.mixer2.clipAction(clip2);
+      clip.play();
+      clip2.play();
+
+      //get the bone neck
+      model.traverse(o => {
  
-  let clip = THREE.AnimationClip.findByName(fileAnimations, "plante-move");
-   clip = this.mixer.clipAction(clip);
-   //let lol= test.clipAction(clip);
-   //lol.play();
-   //console.log(test)
-    clip.play();
-    console.log(this.mixer)
-    });  
- 
- 
-  //animations
-  /*
+  if (o.isBone && o.name === 'neck') { 
+    this.neck = o;
+  }
+  
+});
+    
+    });
+
+    //animations
+    /*
  mixer = new THREE.AnimationMixer(this.scene.children[1]);
   console.log("false")
  console.log(mixer)
 */
 
- //console.log(this.scene)
+    //console.log(this.scene)
     /**
      * Initialisation des lumières
      */
-    const ambientLight = new THREE.AmbientLight(0xffffff,AMBIENT_LIGHT);
+    const ambientLight = new THREE.AmbientLight(0xffffff, AMBIENT_LIGHT);
 
     /**
      * Initialisation des contrôles
@@ -351,13 +431,10 @@ this.scene.add(model);
      */
     this.changeDimensions();
     this.animate();
-  
-console.log(this.scene)
+
+    console.log(this.scene);
   },
-  Animation()
-  {
-    
-  }
+  Animation() {},
 };
 </script>
 
