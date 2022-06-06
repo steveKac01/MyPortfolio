@@ -230,8 +230,10 @@ export default {
             },
  moveBone(mouse, bone, degreeLimitX, degreeLimitY) {
   let degrees = this.getMouseDegrees(mouse.x, mouse.y, degreeLimitX, degreeLimitY);
+  if(bone){
   bone.rotation.y = THREE.Math.degToRad(degrees.x);
   bone.rotation.x = THREE.Math.degToRad(degrees.y);
+  }
 },
 getMouseDegrees(x, y,  degreeLimitX, degreeLimitY) {
   let dx = 0,
