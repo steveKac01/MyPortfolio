@@ -1,7 +1,7 @@
 <template>
-  <div id="app">
+  <div id="app" @mousemove="mouseMove">
     <NavBar @onChangeTheme="handleSwitchTheme"></NavBar>
-    <IntroScene :isDarkMode="this.isDarkMode"></IntroScene>
+    <IntroScene :isDarkMode="this.isDarkMode" :mousePosition="this.mousePosition"></IntroScene>
 
     <div id="section">
       <ExperienceCompo></ExperienceCompo>
@@ -30,8 +30,13 @@ export default {
   },
   data: () => ({
     isDarkMode: false,
+    mousePosition: undefined,
   }),
   methods: {
+     mouseMove() {
+            this.mousePosition ={ x:event.clientX, y:event.clientY}
+           // console.log(this.mousePosition)  
+              },
     handleSwitchTheme(payload) {
       this.isDarkMode = payload.isDarkTheme;
       document.documentElement.classList.toggle("dark-mode"); //Switch css

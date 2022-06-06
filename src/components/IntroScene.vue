@@ -1,5 +1,5 @@
 <template>
-  <div class="container-3d" id="about"  @mousemove="mouseMove">
+  <div class="container-3d" id="about"  >
     <div class="container-about">
       <div class="intro">
         <div class="left">
@@ -37,6 +37,9 @@ export default {
       type: Boolean,
       default: false,
     },
+    mousePosition: {
+      type: Object,
+    }
   },
 
   data: () => ({
@@ -160,7 +163,12 @@ export default {
      * La boucle principal de l'animation de la scène 3D
      */
     animate() {
- 
+   
+   //console.log(this.mousePosition)
+   
+   if(this.mousePosition != undefined){
+    this.moveBone(this.mousePosition,this.neck,40,30)
+   }
       //Changement de thème.
       if (this.oldSwitch != this.isDarkMode) {
         this.switchTheme();
@@ -183,10 +191,6 @@ export default {
       this.render.render(this.scene, this.camera);
       this.oldSwitch = this.isDarkMode;
 
-      //Animation de la plante de merde
-      // this.mixer = new THREE.AnimationMixer(model);
-      //console.log(this.mixerPlante)
-      //todo :|
     },
 
     /**
@@ -218,7 +222,7 @@ export default {
                 this.$el.removeEventListener('mousemove', this.mouseMove());
             },
             mouseMove() {
-             this.mouse ={ x:event.clientX, y:event.clientY}
+            this.mouse ={ x:event.clientX, y:event.clientY}
               if(this.neck){
                this.moveBone(this.mouse,this.neck,40,30)
               }
@@ -261,7 +265,7 @@ getMouseDegrees(x, y,  degreeLimitX, degreeLimitY) {
     ydiff = w.y / 2 - y;
     yPercentage = (ydiff / (w.y / 2)) * 100;
     // Je multiplie les degrés limites pour faire monter la tête plus haut
-    dy = (((degreeLimitY * 1.5) * yPercentage) / 100) * -1;
+    dy = (((degreeLimitY * 1.2) * yPercentage) / 100) * -1;
     }
   
   // Tête baissée (entre 0 et degreeLimitY)
