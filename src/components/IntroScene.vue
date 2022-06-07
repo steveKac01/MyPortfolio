@@ -55,11 +55,11 @@ export default {
     iFrameDark: 1,
     timerSwitch: 0,
     switchFrameDark: 0,
+    statePersonnage:"idle",
     clock: new THREE.Clock(),
     clock2: new THREE.Clock(),
     mixer: undefined,
     mixer2: undefined,
-    //SOURIS ANIMATION
     mouse: undefined,
     neck: undefined,
     playPlanteAnimation: true,
