@@ -1,5 +1,5 @@
 <template>
-  <div class="container-3d" id="about"  >
+  <div class="container-3d" id="about">
     <div class="container-about">
       <div class="intro">
         <div class="left">
@@ -39,7 +39,7 @@ export default {
     },
     mousePosition: {
       type: Object,
-    }
+    },
   },
 
   data: () => ({
@@ -57,11 +57,15 @@ export default {
     switchFrameDark: 0,
     clock: new THREE.Clock(),
     clock2: new THREE.Clock(),
-    mixer: undefined,    
+    mixer: undefined,
     mixer2: undefined,
-//SOURIS ANIMATION
-    mouse:undefined,
-    neck:undefined,
+    //SOURIS ANIMATION
+    mouse: undefined,
+    neck: undefined,
+    playPlanteAnimation: true,
+    //raycaster:new THREE.Raycaster(),
+    //canvaWidth:document.querySelector('#about').clientWidth,
+    //  canvaHeight:document.querySelector('#about').clientHeight
   }),
   methods: {
     /**
@@ -146,38 +150,63 @@ export default {
       this.camera.top = window.innerHeight / camFactor;
       this.camera.bottom = -window.innerHeight / camFactor;
       this.camera.updateProjectionMatrix();
-
-      /**
-       * Disable la caméra pour le mobile.
-       */
-
-      /*
-      if (window.innerWidth < 760) {
-        this.controls.enabled = false
-      } else {
-        this.controls.enabled = true
-      }*/
     },
 
     /**
      * La boucle principal de l'animation de la scène 3D
      */
     animate() {
-   
-   //console.log(this.mousePosition)
-   
-   if(this.mousePosition != undefined){
-    this.moveBone(this.mousePosition,this.neck,40,30)
-   }
+      if (this.mousePosition != undefined) {
+        this.moveBone(this.mousePosition, this.neck, 40, 30);
+      }
       //Changement de thème.
       if (this.oldSwitch != this.isDarkMode) {
         this.switchTheme();
       }
+      /*
+      //Intéractions.
+      
+ // update the picking ray with the camera and mouse position
+ if(this.mousePosition!=undefined && this.canvaWidth!=null){
+
+   let mouse = { x:  2 * (this.mousePosition.x/this.canvaWidth) - 1,
+   y: 1 - 2 * (this.mousePosition.y/this.canvaHeight )}
+//console.log(mouse)
+
+ 
+     let mouse = { x:  2 * (this.mousePosition.x + 0/ window.innerWidth )- 1,
+   y:  1- 2 *(this.mousePosition.y - 0 / window.innerHeight)}
+  
+  this.raycaster.setFromCamera(mouse, this.camera);
+
+ //  mouse.x = ( (event.clientX + canvas.offsetLeft) / canvas.width ) * 2 - 1;
+//    mouse.y = - ( (event.clientY - canvas.offsetTop) / canvas.height ) * 2 + 1;
+
+// calculate objects intersecting the picking ray
+  let intersects = this.raycaster.intersectObjects(this.scene.children, true);
+
+ if (intersects[3]) {       
+    var object = intersects[3].object;
+ console.log(object.name)
+    if (object.name === 'personnage') {
+        this.playPlanteAnimation=true
+
+      if (!this.playPlanteAnimation) {
+        this.playPlanteAnimation=true
+      }
+    }
+  }else{
+            //this.playPlanteAnimation=false
+  }
+  }*/
 
       //Animations.
       if (this.mixer) {
+        if (this.playPlanteAnimation) {
+          this.mixer2.update(this.clock2.getDelta());
+        }
+
         this.mixer.update(this.clock.getDelta());
-        this.mixer2.update(this.clock2.getDelta());
       }
 
       //Animation du mode sombre.
@@ -190,7 +219,6 @@ export default {
       this.controls.update();
       this.render.render(this.scene, this.camera);
       this.oldSwitch = this.isDarkMode;
-
     },
 
     /**
@@ -208,82 +236,118 @@ export default {
         }
       }
     },
+
     /**
-     * TEST SOURIS a enlever todo
+     * Head tracking avec le déplacement de la souris.
+     *
+     * todo: state idle pour le perso.
      */
-      mouseEnter() {
-                console.log('mouseneter');
-                this.popup = true;
-                this.$el.addEventListener('mousemove', this.mouseMove());
-            },
-            mouseLeave() {
-                console.log('mouseleave');
-                this.popup = false;
-                this.$el.removeEventListener('mousemove', this.mouseMove());
-            },
-            mouseMove() {
-            this.mouse ={ x:event.clientX, y:event.clientY}
-              if(this.neck){
-               this.moveBone(this.mouse,this.neck,40,30)
-              }
+    mouseMove() {
+      this.mouse = { x: event.clientX, y: event.clientY };
+      if (this.neck) {
+        this.moveBone(this.mouse, this.neck, 40, 40);
+      }
+    },
 
-            },
- moveBone(mouse, bone, degreeLimitX, degreeLimitY) {
-  let degrees = this.getMouseDegrees(mouse.x, mouse.y, degreeLimitX, degreeLimitY);
-  if(bone){
-  bone.rotation.y = THREE.Math.degToRad(degrees.x);
-  bone.rotation.x = THREE.Math.degToRad(degrees.y);
-  }
-},
-getMouseDegrees(x, y,  degreeLimitX, degreeLimitY) {
-  let dx = 0,
-      dy = 0,
-      xdiff,
-      xPercentage,
-      ydiff,
-      yPercentage;
+    /**
+     * Rotation de l'armature
+     */
+    moveBone(mouse, bone, degreeLimitX, degreeLimitY) {
+      let speedMoveHead = 0.06;
+      let degrees = this.getMouseDegrees(
+        mouse.x,
+        mouse.y,
+        degreeLimitX,
+        degreeLimitY
+      );
+      if (bone) {
+        // Rotation gauche & droite
+        if (bone.rotation.y > THREE.Math.degToRad(degrees.x)) {
+          if (
+            bone.rotation.y - THREE.Math.degToRad(degrees.x) <
+            speedMoveHead
+          ) {
+            bone.rotation.y - THREE.Math.degToRad(degrees.x);
+          } else {
+            bone.rotation.y -= speedMoveHead;
+          }
+        }
+        if (bone.rotation.y < THREE.Math.degToRad(degrees.x)) {
+          if (
+            bone.rotation.y - THREE.Math.degToRad(degrees.x) >
+            speedMoveHead
+          ) {
+            bone.rotation.y - THREE.Math.degToRad(degrees.x);
+          } else {
+            bone.rotation.y += speedMoveHead;
+          }
+        }
 
-  let w = { x: window.innerWidth, y: window.innerHeight };
+        //  bone.rotation.y = THREE.Math.degToRad(degrees.x);
+        // Rotation haut & bas
 
-// Tête regarde à gauche (rotation entre 0 et - degreeLimitX)
-  
-   // 1. If cursor is in the left half of screen
-  if (x <= w.x / 2) {
-    // 2. Get the difference between middle of screen and cursor position
-    xdiff = w.x / 2 - x;  
-    // 3. Find the percentage of that difference (percentage toward edge of screen)
-    xPercentage = (xdiff / (w.x / 2)) * 100;
-    // 4. Convert that to a percentage of the maximum rotation we allow for the neck
-    dx = ((degreeLimitX * xPercentage) / 100) * -1; }
-// Tête regarde à droite (rotation entre 0 et degreeLimitX)
-  if (x >= w.x / 2) {
-    xdiff = x - w.x / 2;
-    xPercentage = (xdiff / (w.x / 2)) * 100;
-    dx = (degreeLimitX * xPercentage) / 100;
-  }
+        if (bone.rotation.x > THREE.Math.degToRad(degrees.y)) {
+          bone.rotation.x -= speedMoveHead;
+        }
+        if (bone.rotation.x < THREE.Math.degToRad(degrees.y)) {
+          bone.rotation.x += speedMoveHead;
+        }
 
-  // Tête levée (entre 0 et -degreeLimitY)
-  if (y <= w.y / 2) {
-    ydiff = w.y / 2 - y;
-    yPercentage = (ydiff / (w.y / 2)) * 100;
-    // Je multiplie les degrés limites pour faire monter la tête plus haut
-    dy = (((degreeLimitY * 1.2) * yPercentage) / 100) * -1;
-    }
-  
-  // Tête baissée (entre 0 et degreeLimitY)
-  if (y >= w.y / 2) {
-    ydiff = y - w.y / 2;
-    yPercentage = (ydiff / (w.y / 2)) * 100;
-    dy = ((degreeLimitY*0 ) * yPercentage) / 100;
-  }
-  return { x: dx, y: dy };
-}
+        // bone.rotation.x = THREE.Math.degToRad(degrees.y);
+      }
+    },
 
+    /**
+     * Obtenir l'angle de la souris
+     */
+    getMouseDegrees(x, y, degreeLimitX, degreeLimitY) {
+      let dx = 0,
+        dy = 0,
+        xdiff,
+        xPercentage,
+        ydiff,
+        yPercentage;
+
+      let w = { x: window.innerWidth, y: window.innerHeight };
+
+      // Tête regarde à gauche (rotation entre 0 et - degreeLimitX)
+
+      // Si le curseur est a gauche de la moitié de l'écran
+      if (x <= w.x / 2) {
+        // La différence entre le millieu de l'écran et la position du curseur
+        xdiff = w.x / 2 - x;
+        // Calcul du % de cette différence (par rapport au bord de l'écran)
+        xPercentage = (xdiff / (w.x / 2)) * 100;
+        //On converti le % par rapport à la rotation max du cou
+        dx = ((degreeLimitX * xPercentage) / 100) * -1;
+      }
+      // Tête regarde à droite (rotation entre 0 et degreeLimitX)
+      if (x >= w.x / 2) {
+        xdiff = x - w.x / 2;
+        xPercentage = (xdiff / (w.x / 2)) * 100;
+        dx = (degreeLimitX * xPercentage) / 100;
+      }
+
+      // Tête levée (entre 0 et -degreeLimitY)
+      if (y <= w.y / 2) {
+        ydiff = w.y / 2 - y;
+        yPercentage = (ydiff / (w.y / 2)) * 100;
+        // Je multiplie les degrés limites pour faire monter la tête plus haut
+        dy = ((degreeLimitY * 1.2 * yPercentage) / 100) * -1;
+      }
+
+      // Tête baissée (entre 0 et degreeLimitY)
+      if (y >= w.y / 2) {
+        ydiff = y - w.y / 2;
+        yPercentage = (ydiff / (w.y / 2)) * 100;
+        dy = (degreeLimitY * 0 * yPercentage) / 100;
+      }
+      return { x: dx, y: dy };
+    },
   },
-
   mounted() {
     window.addEventListener("resize", this.changeDimensions);
- 
+
     /**
      * Configuration de la scène
      */
@@ -319,7 +383,6 @@ getMouseDegrees(x, y,  degreeLimitX, degreeLimitY) {
 
     /**
      * Chargement des textures
-     * todo: use webpack & optimisation
      */
     const textureLoader = new THREE.TextureLoader();
     this.textures = [
@@ -329,7 +392,7 @@ getMouseDegrees(x, y,  degreeLimitX, degreeLimitY) {
     ];
 
     this.textures.forEach((texture) => {
-      //Obtenir un meilleur rendu.
+      // Obtenir un meilleur rendu.
       texture.encoding = THREE.sRGBEncoding;
       texture.flipY = false;
     });
@@ -368,44 +431,37 @@ getMouseDegrees(x, y,  degreeLimitX, degreeLimitY) {
       this.mixer = new THREE.AnimationMixer(model);
       this.mixer2 = new THREE.AnimationMixer(model);
 
-      //let test = new THREE.AnimationMixer(model);
+      // A Améliorer sur un seul mixer
+
       let fileAnimations = gltf.animations;
       let fileAnimations2 = gltf.animations;
 
-      let clip2 = THREE.AnimationClip.findByName(fileAnimations2, "plante-move");
-        let clip = THREE.AnimationClip.findByName(fileAnimations, "perso-idle");
-        
+      let clip2 = THREE.AnimationClip.findByName(
+        fileAnimations2,
+        "plante-move"
+      );
+      let clip = THREE.AnimationClip.findByName(fileAnimations, "perso-idle");
+
       clip = this.mixer.clipAction(clip);
       clip2 = this.mixer2.clipAction(clip2);
       clip.play();
       clip2.play();
 
-      //get the bone neck
-      model.traverse(o => {
- 
-  if (o.isBone && o.name === 'neck') { 
-    this.neck = o;
-  }
-  
-});
-    
+      // Récupérer l'os du neck.
+      model.traverse((o) => {
+        if (o.isBone && o.name === "neck") {
+          this.neck = o;
+        }
+      });
     });
 
-    //animations
-    /*
- mixer = new THREE.AnimationMixer(this.scene.children[1]);
-  console.log("false")
- console.log(mixer)
-*/
-
-    //console.log(this.scene)
     /**
-     * Initialisation des lumières
+     * Initialisation des lumières.
      */
     const ambientLight = new THREE.AmbientLight(0xffffff, AMBIENT_LIGHT);
 
     /**
-     * Initialisation des contrôles
+     * Initialisation des contrôles.
      */
     this.controls = new OrbitControls(this.camera, this.render.domElement);
     this.controls.enableDamping = true;
@@ -438,9 +494,8 @@ getMouseDegrees(x, y,  degreeLimitX, degreeLimitY) {
     this.changeDimensions();
     this.animate();
 
-    console.log(this.scene);
+    // console.log(this.scene);
   },
-  Animation() {},
 };
 </script>
 

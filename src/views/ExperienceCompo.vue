@@ -47,7 +47,6 @@ export default {
   },
   methods: {
 animationTiles(tile){
- 
       for (let i = 0; i < elem.length; i++) {
         gsap.to(elem[i], {
           scrollTrigger: {
@@ -60,8 +59,7 @@ animationTiles(tile){
           duration: 0.7,
           y: -200,
         });
-      }
-    
+      }   
 }
   },
   mounted(){

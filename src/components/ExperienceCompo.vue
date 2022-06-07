@@ -84,31 +84,12 @@ animationTiles(tiles){
       }
     
 },
-/**
- * Tiles's Back animation. 
- */
-animationTilesBack(tiles){ 
-      for (let i = tiles.length; i >=0 ; i--) {
-        gsap.to(tiles[i], {
-          scrollTrigger: {
-            trigger: tiles[i],
-            start: "0 95%",
-            toggleActions: "play",
-          },
-          opacity: 1,
-          ease: "power1.inOut",
-          duration: 0.7,
-          delay: 1 - (0.2*i)
-        });
-      }  
-}
+
+
   },
   mounted(){
     let skills = document.querySelectorAll(".skills");
-    this.animationTiles(skills);
-
-     let skillsBack = document.querySelectorAll(".skills-back");
-    this.animationTilesBack(skillsBack);
+     this.animationTiles(skills);
   }
 }
 </script>
