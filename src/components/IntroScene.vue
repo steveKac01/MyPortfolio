@@ -55,19 +55,50 @@ export default {
     iFrameDark: 1,
     timerSwitch: 0,
     switchFrameDark: 0,
-    statePersonnage:"idle",
     clock: new THREE.Clock(),
     clock2: new THREE.Clock(),
+    //todo: un mixer pas plus
     mixer: undefined,
     mixer2: undefined,
-    mouse: undefined,
+
+    oldMouse: undefined,
     neck: undefined,
     playPlanteAnimation: true,
-    //raycaster:new THREE.Raycaster(),
-    //canvaWidth:document.querySelector('#about').clientWidth,
-    //  canvaHeight:document.querySelector('#about').clientHeight
+    statusIdle: true,
+    timerIdle: 0,
+    rayCaster: new THREE.Raycaster(),
   }),
   methods: {
+    /***
+     * Click loading emote
+     */
+    interactScene() {
+console.log(this.scene.children[1].children[0].children)
+console.log(this.scene)
+    },
+    /**
+     * Gestion du status idle du personnage
+     */
+    idleStateHandler() {
+      const limitSwitchIdle = 100;
+      if (this.oldMouse != undefined) {
+        if (this.oldMouse == this.mousePosition) {
+          if (!this.statusIdle) {
+            this.timerIdle += 1;
+            if (this.timerIdle > limitSwitchIdle) {
+              this.statusIdle = true;
+              this.mixer._actions[0].paused = false;
+            }
+          }
+        } else {
+          this.mixer._actions[0].paused = true;
+
+          this.statusIdle = false;
+          this.timerIdle = 0;
+        }
+      }
+    },
+
     /**
      * Obtenir un nombre aléatoire pour switch de frame en mode sombre.
      */
@@ -153,21 +184,103 @@ export default {
     },
 
     /**
+     * Rotation de l'os selon la vitesse.
+     */
+    boneRotate(bone, speed, valueX, valueY) {
+      if (bone) {
+        // Rotation gauche & droite, deux vitesses todo ou abandonner ?
+        if (bone.rotation.y > THREE.Math.degToRad(valueX)) {
+          if (bone.rotation.y - THREE.Math.degToRad(valueX) < speed) {
+            bone.rotation.y - THREE.Math.degToRad(valueX);
+          } else {
+            bone.rotation.y -= speed;
+          }
+        }
+        if (bone.rotation.y < THREE.Math.degToRad(valueX)) {
+          if (bone.rotation.y - THREE.Math.degToRad(valueX) > speed) {
+            bone.rotation.y - THREE.Math.degToRad(valueX);
+          } else {
+            bone.rotation.y += speed;
+          }
+        }
+
+        // Rotation haut & bas, une vitesse.
+        if (bone.rotation.x > THREE.Math.degToRad(valueY)) {
+          bone.rotation.x -= speed;
+        }
+        if (bone.rotation.x < THREE.Math.degToRad(valueY)) {
+          bone.rotation.x += speed;
+        }
+      }
+    },
+
+    /**
+     * Retour en état idle de la tête.
+     */
+    returnHeadToOrigin() {
+      const speedMoveHead = 0.04;
+      this.boneRotate(this.neck, speedMoveHead, 0, 0);
+    },
+
+    /**
+     * Intercepte les objets en raycast.
+     */
+    intersect() {
+      const mouse = new THREE.Vector2();
+
+      mouse.x = ( this.mousePosition.x / window.innerWidth ) * 2 - 1;
+	mouse.y = - ( this.mousePosition.y / window.innerHeight ) * 2 + 1;
+      /*
+      mouse.x = (this.mousePosition.x / window.innerWidth) * 2 - 1;
+      mouse.y = -(this.mousePosition.y / window.innerHeight) * 2 + 1;*/
+//console.log(mouse)
+
+      this.rayCaster.setFromCamera(mouse, this.camera);
+      let intersects = this.rayCaster.intersectObjects(
+this.scene.children
+        ,true
+        
+      )
+       if (intersects.length > 0) {
+      for (let i = 0; i < intersects.length; i++) {
+       
+       //   intersects[i].object.material.wireframe = true;
+      //intersects[i].object.material.color.set(0xff0000);
+
+     console.log(intersects[i].object.name);
+        
+      }
+       }  
+    },
+
+    /**
      * La boucle principal de l'animation de la scène 3D
      */
     animate() {
       if (this.mousePosition != undefined) {
-        this.moveBone(this.mousePosition, this.neck, 40, 30);
+        if (!this.statusIdle) {
+          this.moveBone(this.mousePosition, this.neck, 40, 30);
+        } else {
+          //retour du bone neck a l'emplacement d'origine
+          this.returnHeadToOrigin();
+        }
+
+        //gestion de l'animation idle
+        this.idleStateHandler();
       }
       //Changement de thème.
       if (this.oldSwitch != this.isDarkMode) {
         this.switchTheme();
       }
-      /*
+/*
       //Intéractions.
-      
+      if (this.mousePosition != undefined) {
+        this.intersect();
+      }
+*/
+      /*
  // update the picking ray with the camera and mouse position
- if(this.mousePosition!=undefined && this.canvaWidth!=null){
+ if(this.mousePosition!=undefined){
 
    let mouse = { x:  2 * (this.mousePosition.x/this.canvaWidth) - 1,
    y: 1 - 2 * (this.mousePosition.y/this.canvaHeight )}
@@ -200,7 +313,10 @@ export default {
   }
   }*/
 
-      //Animations.
+      /**
+       * Gestion des animations
+       * TODO: un mixer, un array clips
+       */
       if (this.mixer) {
         if (this.playPlanteAnimation) {
           this.mixer2.update(this.clock2.getDelta());
@@ -214,11 +330,15 @@ export default {
         this.animateDarkMode();
       }
 
+      //Demande trop de ressource
       requestAnimationFrame(this.animate);
       this.cameraRotateBounce();
       this.controls.update();
       this.render.render(this.scene, this.camera);
       this.oldSwitch = this.isDarkMode;
+
+      // Obtenir la dernière position de la souris avant la prochaine boucle.
+      this.oldMouse = this.mousePosition;
     },
 
     /**
@@ -238,9 +358,7 @@ export default {
     },
 
     /**
-     * Head tracking avec le déplacement de la souris.
-     *
-     * todo: state idle pour le perso.
+     * Head tracking sur le déplacement de la souris.
      */
     mouseMove() {
       this.mouse = { x: event.clientX, y: event.clientY };
@@ -253,7 +371,7 @@ export default {
      * Rotation de l'armature
      */
     moveBone(mouse, bone, degreeLimitX, degreeLimitY) {
-      let speedMoveHead = 0.06;
+      const speedMoveHead = 0.06;
       let degrees = this.getMouseDegrees(
         mouse.x,
         mouse.y,
@@ -261,39 +379,7 @@ export default {
         degreeLimitY
       );
       if (bone) {
-        // Rotation gauche & droite
-        if (bone.rotation.y > THREE.Math.degToRad(degrees.x)) {
-          if (
-            bone.rotation.y - THREE.Math.degToRad(degrees.x) <
-            speedMoveHead
-          ) {
-            bone.rotation.y - THREE.Math.degToRad(degrees.x);
-          } else {
-            bone.rotation.y -= speedMoveHead;
-          }
-        }
-        if (bone.rotation.y < THREE.Math.degToRad(degrees.x)) {
-          if (
-            bone.rotation.y - THREE.Math.degToRad(degrees.x) >
-            speedMoveHead
-          ) {
-            bone.rotation.y - THREE.Math.degToRad(degrees.x);
-          } else {
-            bone.rotation.y += speedMoveHead;
-          }
-        }
-
-        //  bone.rotation.y = THREE.Math.degToRad(degrees.x);
-        // Rotation haut & bas
-
-        if (bone.rotation.x > THREE.Math.degToRad(degrees.y)) {
-          bone.rotation.x -= speedMoveHead;
-        }
-        if (bone.rotation.x < THREE.Math.degToRad(degrees.y)) {
-          bone.rotation.x += speedMoveHead;
-        }
-
-        // bone.rotation.x = THREE.Math.degToRad(degrees.y);
+        this.boneRotate(this.neck, speedMoveHead, degrees.x, degrees.y);
       }
     },
 
@@ -347,6 +433,7 @@ export default {
   },
   mounted() {
     window.addEventListener("resize", this.changeDimensions);
+    window.addEventListener("click", this.interactScene);
 
     /**
      * Configuration de la scène
@@ -357,7 +444,7 @@ export default {
     const USE_ANTIALIASING = true;
     const CAMERA_ZOOM = 30;
     const CAMERA_POSITION = [0.2603, 2.8707, 4.5465];
-    const IS_AUTO_ROTATE = true;
+    const IS_AUTO_ROTATE = false;
     const SPEED_AUTO_ROTATE = 0.4;
     const SPEED_USER_ROTATE = 0.05;
     const IS_ZOOM_ENABLED = false;
@@ -382,7 +469,8 @@ export default {
     this.render.setSize(window.innerWidth, window.innerHeight);
 
     /**
-     * Chargement des textures
+     * Chargement des textures.
+     * Todo repasser sur la texture de base de jour sans la charger et utiliser celle dans le file modele.
      */
     const textureLoader = new THREE.TextureLoader();
     this.textures = [
@@ -431,7 +519,7 @@ export default {
       this.mixer = new THREE.AnimationMixer(model);
       this.mixer2 = new THREE.AnimationMixer(model);
 
-      // A Améliorer sur un seul mixer
+      // A Améliorer sur un seul mixer et un array de clips
 
       let fileAnimations = gltf.animations;
       let fileAnimations2 = gltf.animations;
