@@ -444,9 +444,9 @@ this.scene.children
     const USE_ANTIALIASING = true;
     const CAMERA_ZOOM = 30;
     const CAMERA_POSITION = [0.2603, 2.8707, 4.5465];
-    const IS_AUTO_ROTATE = false;
+    const IS_AUTO_ROTATE = true;
     const SPEED_AUTO_ROTATE = 0.4;
-    const SPEED_USER_ROTATE = 0.05;
+    const SPEED_USER_ROTATE = 0.1;
     const IS_ZOOM_ENABLED = false;
     const AMBIENT_LIGHT = 1;
     this.switchFrameDark = this.getRandomSwitchFrameTimer();
