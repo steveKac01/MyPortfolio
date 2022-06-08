@@ -120,6 +120,7 @@ export default {
 
 header {
   font-family: "Raleway", sans-serif;
+  caret-color: transparent;
 }
 
 li:hover {

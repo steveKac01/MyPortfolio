@@ -73,8 +73,8 @@ export default {
      * Click loading emote
      */
     interactScene() {
-console.log(this.scene.children[1].children[0].children)
-console.log(this.scene)
+//console.log(this.scene.children[1].children[0].children)
+//console.log(this.scene)
     },
     /**
      * Gestion du status idle du personnage
@@ -133,8 +133,9 @@ console.log(this.scene)
         this.switchFrameDark = this.getRandomSwitchFrameTimer();
 
         //Changement de texture.
-        this.scene.children[1].children[3].material.map =
-          this.textures[this.iFrameDark];
+      //  this.scene.children[1].children[3].material.map =
+        //  this.textures[this.iFrameDark];
+          this.applyTexture(this.iFrameDark)
       }
     },
 
@@ -160,7 +161,14 @@ console.log(this.scene)
      * iTexture l'index de la texture à appliquer.
      */
     applyTexture(iTexture) {
-      this.scene.children[1].children[3].material.map = this.textures[iTexture];
+      for (let i = 0; i <  this.scene.children[1].children.length; i++) {
+        if(this.scene.children[1].children[i].name==="bureau"){
+      this.scene.children[1].children[i].material.map = this.textures[iTexture];
+ 
+        }
+        
+      }
+      //  this.scene.children[1].children[3].material.map = this.textures[iTexture];
     },
 
     /**
@@ -326,7 +334,7 @@ this.scene.children
       }
 
       //Animation du mode sombre.
-      if (this.isDarkMode) {
+      if (this.isDarkMode && this.statusIdle) {
         this.animateDarkMode();
       }
 
