@@ -95,7 +95,7 @@ export default {
      */
     interactScene() {
       //console.log(this.scene.children[1].children[0].children)
-      //console.log(this.scene)
+      console.log(this.scene)
     },
     /**
      * Gestion du status idle du personnage
@@ -524,8 +524,8 @@ export default {
       CANVA_SIZE[0] / 2,
       CANVA_SIZE[1] / 2,
       -CANVA_SIZE[1] / 2,
-      -1000, //1
-      100000 //1000
+      0.1, //1
+      1000 //1000
     );
     this.camera.position.set(
       CAMERA_POSITION[0],
@@ -546,7 +546,7 @@ export default {
       model.scale.set(1, 1, 1);
 
       this.scene.add(model);
-
+      //this. gltf.scene.traverse( function( object ) { object.frustumCulled = false; } );
       this.mixer = new THREE.AnimationMixer(model);
       this.mixer2 = new THREE.AnimationMixer(model);
 
@@ -568,6 +568,8 @@ export default {
 
       // Récupérer l'os du neck.
       model.traverse((o) => {
+
+         o.frustumCulled = false; 
         if (o.isBone && o.name === "neck") {
           this.neck = o;
         }
@@ -606,6 +608,9 @@ export default {
     this.scene.add(ambientLight);
     const container = document.querySelector(".container-3d");
     container.append(this.render.domElement);
+
+
+    
 
     /**
      * Initialisation au chargement
