@@ -6,7 +6,10 @@
           <div>
             <h2>Steve Kaci</h2>
           </div>
-          <div class="sub-title">Développeur Web en devenir | ou pas on sait jamais si j'ai rage quit !</div>
+          <div class="sub-title">
+            Développeur Web en devenir | ou pas on sait jamais si j'ai rage quit
+            !
+          </div>
         </div>
         <div class="right">
           <div class="photo">
@@ -68,32 +71,31 @@ export default {
     timerIdle: 0,
     rayCaster: new THREE.Raycaster(),
     //try canva
-    canva:undefined,
-    aboutDiv:undefined
+    canva: undefined,
+    aboutDiv: undefined,
   }),
   methods: {
-    getSizeCanva(){
-//selon sa hauteur sur la page ! to fix :s
-    console.log('canva')
-    console.log(this.canva.offsetTop)
-    console.log(this.canva.clientWidth)
-    console.log(this.canva.clientHeight)
-     console.log('about')
-    console.log(this.aboutDiv.clientWidth)
-    console.log(this.aboutDiv.clientHeight)
+    getSizeCanva() {
+      //selon sa hauteur sur la page ! to fix :s
+      console.log("canva");
+      console.log(this.canva.offsetTop);
+      console.log(this.canva.clientWidth);
+      console.log(this.canva.clientHeight);
+      console.log("about");
+      console.log(this.aboutDiv.clientWidth);
+      console.log(this.aboutDiv.clientHeight);
 
-  let hauteurDiv = (this.canva.clientHeight   );
-hauteurDiv =30;
-    console.log(this.aboutDiv.style='bottom:'+hauteurDiv+'px;') //15% du fix it
-    
+      let hauteurDiv = this.canva.clientHeight;
+      hauteurDiv = 30;
+      console.log((this.aboutDiv.style = "bottom:" + hauteurDiv + "px;")); //15% du fix it
     },
 
     /***
      * Click loading emote
      */
     interactScene() {
-//console.log(this.scene.children[1].children[0].children)
-//console.log(this.scene)
+      //console.log(this.scene.children[1].children[0].children)
+      //console.log(this.scene)
     },
     /**
      * Gestion du status idle du personnage
@@ -152,9 +154,9 @@ hauteurDiv =30;
         this.switchFrameDark = this.getRandomSwitchFrameTimer();
 
         //Changement de texture.
-      //  this.scene.children[1].children[3].material.map =
+        //  this.scene.children[1].children[3].material.map =
         //  this.textures[this.iFrameDark];
-          this.applyTexture(this.iFrameDark)
+        this.applyTexture(this.iFrameDark);
       }
     },
 
@@ -180,11 +182,11 @@ hauteurDiv =30;
      * iTexture l'index de la texture à appliquer.
      */
     applyTexture(iTexture) {
-      for (let i = 0; i <  this.scene.children[1].children.length; i++) {
-        if(this.scene.children[1].children[i].name==="bureau"){
-      this.scene.children[1].children[i].material.map = this.textures[iTexture];
+      for (let i = 0; i < this.scene.children[1].children.length; i++) {
+        if (this.scene.children[1].children[i].name === "bureau") {
+          this.scene.children[1].children[i].material.map =
+            this.textures[iTexture];
         }
-        
       }
       //  this.scene.children[1].children[3].material.map = this.textures[iTexture];
     },
@@ -199,7 +201,7 @@ hauteurDiv =30;
         //mobile
         this.render.setSize(window.innerWidth, window.innerHeight);
       } else {
-        this.render.setSize(window.innerWidth/1.6, window.innerHeight/1.6);
+        this.render.setSize(window.innerWidth / 1.6, window.innerHeight / 1.6);
       }
       // maj de la camera
       this.camera.left = -window.innerWidth / camFactor;
@@ -255,28 +257,24 @@ hauteurDiv =30;
     intersect() {
       const mouse = new THREE.Vector2();
 
-      mouse.x = ( this.mousePosition.x / window.innerWidth ) * 2 - 1;
-	mouse.y = - ( this.mousePosition.y / window.innerHeight ) * 2 + 1;
+      mouse.x = (this.mousePosition.x / window.innerWidth) * 2 - 1;
+      mouse.y = -(this.mousePosition.y / window.innerHeight) * 2 + 1;
       /*
       mouse.x = (this.mousePosition.x / window.innerWidth) * 2 - 1;
       mouse.y = -(this.mousePosition.y / window.innerHeight) * 2 + 1;*/
-//console.log(mouse)
+      //console.log(mouse)
 
       this.rayCaster.setFromCamera(mouse, this.camera);
       let intersects = this.rayCaster.intersectObjects(
-this.scene.children
-        ,true
-        
-      )
-       if (intersects.length > 0) {
-      for (let i = 0; i < intersects.length; i++) {
-       
-       //   intersects[i].object.material.wireframe = true;
-      //intersects[i].object.material.color.set(0xff0000);
- 
-        
+        this.scene.children,
+        true
+      );
+      if (intersects.length > 0) {
+        for (let i = 0; i < intersects.length; i++) {
+          //   intersects[i].object.material.wireframe = true;
+          //intersects[i].object.material.color.set(0xff0000);
+        }
       }
-       }  
     },
 
     /**
@@ -298,7 +296,7 @@ this.scene.children
       if (this.oldSwitch != this.isDarkMode) {
         this.switchTheme();
       }
-/*
+      /*
       //Intéractions.
       if (this.mousePosition != undefined) {
         this.intersect();
@@ -497,9 +495,9 @@ this.scene.children
     });
     this.render.setSize(CANVA_SIZE[0], CANVA_SIZE[1]);
     this.render.outputEncoding = THREE.sRGBEncoding;
- 
-    this.render.setSize(window.innerWidth/1.5, window.innerHeight/1.5);
-       this.render.setPixelRatio(window.devicePixelRatio);
+
+    this.render.setSize(window.innerWidth / 1.5, window.innerHeight / 1.5);
+    this.render.setPixelRatio(window.devicePixelRatio);
 
     /**
      * Chargement des textures.
@@ -526,8 +524,8 @@ this.scene.children
       CANVA_SIZE[0] / 2,
       CANVA_SIZE[1] / 2,
       -CANVA_SIZE[1] / 2,
-      1,
-      1000
+      -1000, //1
+      100000 //1000
     );
     this.camera.position.set(
       CAMERA_POSITION[0],
