@@ -35,7 +35,7 @@ export default {
 
 </script>
 
-<style scoped>
+<style scoped>/*
 p {
     text-align: start;
 }
@@ -69,5 +69,5 @@ a:hover {
 .v-enter-from,
 .v-leave-to {
   opacity: 0;
-}
+}*/
 </style>

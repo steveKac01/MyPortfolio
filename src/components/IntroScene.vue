@@ -67,8 +67,27 @@ export default {
     statusIdle: true,
     timerIdle: 0,
     rayCaster: new THREE.Raycaster(),
+    //try canva
+    canva:undefined,
+    aboutDiv:undefined
   }),
   methods: {
+    getSizeCanva(){
+//selon sa hauteur sur la page ! to fix :s
+    console.log('canva')
+    console.log(this.canva.offsetTop)
+    console.log(this.canva.clientWidth)
+    console.log(this.canva.clientHeight)
+     console.log('about')
+    console.log(this.aboutDiv.clientWidth)
+    console.log(this.aboutDiv.clientHeight)
+
+  let hauteurDiv = (this.canva.clientHeight   );
+hauteurDiv =30;
+    console.log(this.aboutDiv.style='bottom:'+hauteurDiv+'px;') //15% du fix it
+    
+    },
+
     /***
      * Click loading emote
      */
@@ -164,7 +183,6 @@ export default {
       for (let i = 0; i <  this.scene.children[1].children.length; i++) {
         if(this.scene.children[1].children[i].name==="bureau"){
       this.scene.children[1].children[i].material.map = this.textures[iTexture];
- 
         }
         
       }
@@ -181,7 +199,7 @@ export default {
         //mobile
         this.render.setSize(window.innerWidth, window.innerHeight);
       } else {
-        this.render.setSize(window.innerWidth, window.innerHeight);
+        this.render.setSize(window.innerWidth/1.6, window.innerHeight/1.6);
       }
       // maj de la camera
       this.camera.left = -window.innerWidth / camFactor;
@@ -189,6 +207,7 @@ export default {
       this.camera.top = window.innerHeight / camFactor;
       this.camera.bottom = -window.innerHeight / camFactor;
       this.camera.updateProjectionMatrix();
+      this.getSizeCanva();
     },
 
     /**
@@ -254,8 +273,7 @@ this.scene.children
        
        //   intersects[i].object.material.wireframe = true;
       //intersects[i].object.material.color.set(0xff0000);
-
-     console.log(intersects[i].object.name);
+ 
         
       }
        }  
@@ -440,6 +458,12 @@ this.scene.children
     },
   },
   mounted() {
+    //taille div
+    this.canva = document.querySelector(".container-3d");
+    this.aboutDiv = document.querySelector(".container-about");
+
+    this.getSizeCanva();
+
     window.addEventListener("resize", this.changeDimensions);
     window.addEventListener("click", this.interactScene);
 
@@ -450,8 +474,8 @@ this.scene.children
     const CANVA_SIZE = [350, 250];
     const IS_ALPHA = true;
     const USE_ANTIALIASING = true;
-    const CAMERA_ZOOM = 30;
-    const CAMERA_POSITION = [0.2603, 2.8707, 4.5465];
+    const CAMERA_ZOOM = 40;
+    const CAMERA_POSITION = [0.2603, 2.9707, 4.5465];
     const IS_AUTO_ROTATE = true;
     const SPEED_AUTO_ROTATE = 0.4;
     const SPEED_USER_ROTATE = 0.1;
@@ -473,8 +497,9 @@ this.scene.children
     });
     this.render.setSize(CANVA_SIZE[0], CANVA_SIZE[1]);
     this.render.outputEncoding = THREE.sRGBEncoding;
-    this.render.setPixelRatio(window.devicePixelRatio);
-    this.render.setSize(window.innerWidth, window.innerHeight);
+ 
+    this.render.setSize(window.innerWidth/1.5, window.innerHeight/1.5);
+       this.render.setPixelRatio(window.devicePixelRatio);
 
     /**
      * Chargement des textures.
@@ -519,7 +544,7 @@ this.scene.children
 
     loader.load(PATH_TO_MODEL, (gltf) => {
       const model = gltf.scene;
-      model.position.set(0, -0.8, 0);
+      model.position.set(0, -0.9, 0);
       model.scale.set(1, 1, 1);
 
       this.scene.add(model);

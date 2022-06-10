@@ -1,0 +1,83 @@
+.projects-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 30px 20px;
+    grid-template-areas:
+        "project-1 project-2 project-3"
+        "project-4 project-5 project-6"
+    ;
+    margin-bottom: 10px;
+}
+
+.project-1 {
+    grid-area: project-1;
+}
+
+.project-2 {
+    grid-area: project-2;
+}
+
+.project-3 {
+    grid-area: project-3;
+}
+
+.project-4 {
+    grid-area: project-4;
+}
+
+.project-5 {
+    grid-area: project-5;
+}
+
+.project-6 {
+    grid-area: project-6;
+}
+
+.project {
+    text-align: center;
+ /*   background-color: white; */
+    padding: 10px;
+    border-radius: 4%;
+    position: relative;
+  /*  top: 200px;*/
+  /*  opacity: 0;*/
+}
+.title{
+    background: var(--title-frame);
+    padding: 5px 10px;
+    margin-bottom: 20px;
+    text-align: center;  
+    color: white;
+
+}
+.title h1 {
+    background: unset;
+    padding: unset;
+}
+.filter{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 3px;
+    padding-bottom: 10px;
+}
+.filter >div{
+    display: flex;
+    margin-right: 20px;
+}
+ input{
+display:inline;
+}
+.project img:hover{
+opacity: 0.8;
+cursor: pointer;
+}
+.img-container{
+    background-color: var(--title-frame);
+    overflow: hidden;
+    
+}
+img{
+    width: 220px;
+    height: 150px;
+}

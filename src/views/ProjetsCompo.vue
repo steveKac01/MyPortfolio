@@ -1,6 +1,36 @@
 <template>
-  <div class="project-container">
-    <div
+  <div>
+    <div class="title">
+      <h1>PROJETS</h1>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium, a?
+      </p>
+      <div class="filter">
+        <div>
+          <input
+            type="checkbox"
+            id="front-end"
+            checked
+            @change="filterProject()"
+            v-model="frontCheckBox"
+          />
+          FRONT END
+        </div>
+
+        <div>
+          <input
+            type="checkbox"
+            id="back-end"
+            checked
+            @change="filterProject()"
+            v-model="backCheckBox"
+          />
+          BACK END
+        </div>
+      </div>
+    </div>
+    <div class="projects-container">
+      <!-- <div
       class="project-background"
       v-for="(project, idx) in projects"
       :key="idx"
@@ -33,6 +63,26 @@
           </div>
         </div>
       </div>
+    </div> -->
+
+      <div :class="getClass(idx)" v-for="(project, idx) in projects[0]" :key="idx">
+        <div class="img" style="width: auto">
+          <div class="img-container">
+            <img :src="getImg('idx')" :alt="project[0].title" width="100%" />
+          </div>
+          <p>{{ project.description }}</p>
+        </div>
+        <!--enlever les '' de idx pour les images xO-->
+
+        <!--    <H4>{{ project.title }}</H4>-->
+
+        <!--    <p>{{ project.description }}</p>-->
+
+        <button-project
+          :github="project.github"
+          label="GITHUB"
+        ></button-project>
+      </div>
     </div>
   </div>
 </template>
@@ -53,14 +103,65 @@ export default {
     isDarkMode: Boolean,
   },
   mounted() {
-    let project = document.querySelectorAll(".project-background");
-    this.animationProject(project);
+    //let project = document.querySelectorAll(".project");
+    //this.animationProject(project);
+    console.log(projects.front)
   },
   data: () => ({
     projects: projects,
+    projectsBackup: projects,
+    frontCheckBox: true,
+    backCheckBox: true,
   }),
   methods: {
-    
+    /**
+     * Filtre les projets
+     */
+    filterProject() {
+    /*
+    this.projects = null;
+
+      if (this.frontCheckBox) {
+        this.projects = this.projectsBackup.filter((project) => {
+          
+          if(this.frontCheckBox ){
+            
+          }
+          if (
+            project.front == this.frontCheckBox ||
+            project.back == this.backCheckBox
+          )
+            return true;
+        });
+      }
+*/
+      // this.projects=""
+      //Front
+      /*
+      if (this.frontCheckBox) {
+        this.projects = this.projectsBackup.filter((project) => {
+          return project.front == true
+        })
+      }  
+
+      //Back
+       if (this.backCheckBox) {
+        this.projects = this.projectsBackup.filter((project) => {
+          return project.back == true
+        })
+      }  */
+      /*
+        this.projects = this.projectsBackup.filter((project) => {
+          return  project.back == true && project.front== true
+        })*/
+    },
+
+    /**
+     * Obtenir la classe du projet.
+     */
+    getClass(idx) {
+      return "project project-" + (idx + 1);
+    },
     /**
      * Get image with webpack.
      */
@@ -96,6 +197,7 @@ export default {
           ease: "power1.inOut",
           duration: 0.7,
           y: -200,
+          delay: 0.2 * i,
         });
       }
     },
@@ -104,5 +206,6 @@ export default {
 </script>
 
 <style scoped>
-@import "@/assets/style/projects.css";
+/*@import "@/assets/style/projects.css";*/
+@import "@/assets/style/projects-copy.css";
 </style>

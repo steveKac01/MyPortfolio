@@ -6,7 +6,7 @@
     <div id="section">
       <ExperienceCompo></ExperienceCompo>
       <div id="projects">
-        <h1>PROJETS</h1>
+    
           <router-view />
       </div>
     </div>
@@ -54,7 +54,7 @@ body {
   overflow-x: hidden;
 }
 #section {
-  padding: 2% 0 5% 0;
+  padding: 0 0 5% 0;
 }
 h1 {
   background: var(--title-frame);
@@ -76,7 +76,7 @@ li {
 
   --background-footer: #2c3e50;
   --text-invert-color: #cccccc;
-  --title-frame: #2c3e507b;
+  --title-frame: #2c3e50;
   --text-color-highlight: #000000;
   --text_link: black;
   --alpha-background: rgba(5, 5, 5, 0.39);
@@ -120,6 +120,7 @@ body {
 /* DYNAMIC CSS */
 h1 {
   color: var(--background-footer);
+  margin-top: 0;
 }
 
 .hide {
@@ -128,13 +129,13 @@ h1 {
 
 @media screen and (min-width: 768px) {
   #section {
-    padding: 2% 5% 8%;
+    padding: 0 5% 8%;
   }
 }
 
 @media screen and (min-width: 970px) {
   #section {
-    padding: 2% 22% 4% 22%;
+    padding: 0 25% 4% 25%;
   }
 }
 
