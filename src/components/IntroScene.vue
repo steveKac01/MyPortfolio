@@ -6,7 +6,7 @@
           <div>
             <h2>Steve Kaci</h2>
           </div>
-          <div class="sub-title">Développeur Web en devenir |</div>
+          <div class="sub-title">Développeur Web en devenir | ou pas on sait jamais si j'ai rage quit !</div>
         </div>
         <div class="right">
           <div class="photo">
@@ -544,7 +544,7 @@ this.scene.children
 
     loader.load(PATH_TO_MODEL, (gltf) => {
       const model = gltf.scene;
-      model.position.set(0, -0.9, 0);
+      model.position.set(0, -1.3, 0);
       model.scale.set(1, 1, 1);
 
       this.scene.add(model);

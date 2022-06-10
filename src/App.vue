@@ -136,6 +136,7 @@ h1 {
 @media screen and (min-width: 970px) {
   #section {
     padding: 0 25% 4% 25%;
+  
   }
 }
 

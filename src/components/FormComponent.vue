@@ -120,7 +120,7 @@ export default {
       return false;
     },
     sendEmail(e) {
-      /* Je vérifie si mon form est valide + regex de l'email. */
+      /* Je vérifie si mon formulaire est valide + regex de l'email. */
       if (this.checkForm() && this.emailIsValid()) {
         try {
           emailjs
@@ -135,13 +135,16 @@ export default {
                 message: this.message,
               }
             )
-             /* Retour de l'api : l'email est bien envoyé */
+             /* Retour de l'api : l'email a bien été envoyé */
             .then(
-              (result) => {             
-                this.hideForm = true;
+              (result) => {        
+                  /*
+                  Tu peux mettre ton code ici pour dire que l'email est bien envoyé.
+                  */     
+                this.hideForm = true; 
                 console.log("Email envoyé: " + result);
               },
-              /* Retour de l'api = erreur */
+              /* Retour de l'api : erreur */
               (error) => {
             
                 console.log("Une erreur est survenue: " + error.text);

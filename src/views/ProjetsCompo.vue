@@ -65,10 +65,10 @@
       </div>
     </div> -->
 
-      <div :class="getClass(idx)" v-for="(project, idx) in projects[0]" :key="idx">
+      <div :class="getClass(idx)" v-for="(project, idx) in projects" :key="idx">
         <div class="img" style="width: auto">
           <div class="img-container">
-            <img :src="getImg('idx')" :alt="project[0].title" width="100%" />
+            <img :src="getImg('idx')" :alt="project.title" width="100%" />
           </div>
           <p>{{ project.description }}</p>
         </div>
@@ -105,7 +105,7 @@ export default {
   mounted() {
     //let project = document.querySelectorAll(".project");
     //this.animationProject(project);
-    console.log(projects.front)
+    console.log(projects)
   },
   data: () => ({
     projects: projects,

@@ -186,6 +186,9 @@ li:hover {
   text-align: left;
   cursor: pointer;
 }
+.slide-cat li:last-child {
+  margin: unset;
+}
 
 .slide-cat a {
   color: var(--text-invert-color) !important;
