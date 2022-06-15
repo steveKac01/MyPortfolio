@@ -86,9 +86,16 @@ export default {
       console.log(this.aboutDiv.clientHeight);
 
       let hauteurDiv = this.canva.clientHeight/20;
-    //  hauteurDiv = 30;
+      hauteurDiv = 30;
       console.log((this.aboutDiv.style = "bottom:" + hauteurDiv + "px;")); //15% du fix it
     },
+   getSizeCanvaMobile() {
+
+      let hauteurDiv = this.canva.clientHeight/7;
+      
+      console.log((this.aboutDiv.style = "bottom:" + hauteurDiv + "px;")); //15% du fix it
+    },
+
 
     /***
      * Click loading emote
@@ -202,9 +209,10 @@ export default {
        this.render.setPixelRatio(window.devicePixelRatio);
         this.camera.zoom = 28;
         
-       
+          this.getSizeCanvaMobile();
      //   this.aboutDiv.style = "top: 0 px";
       } else {
+           this.getSizeCanva();
            this.camera.zoom = 38;
         this.render.setSize(window.innerWidth / 1.2, window.innerHeight / 1.2);
       }
@@ -215,7 +223,7 @@ export default {
       this.camera.top = window.innerHeight / camFactor;
       this.camera.bottom = -window.innerHeight / camFactor;
       this.camera.updateProjectionMatrix()
-      this.getSizeCanva();
+   
     },
 
     /**
