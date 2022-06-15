@@ -85,8 +85,8 @@ export default {
       console.log(this.aboutDiv.clientWidth);
       console.log(this.aboutDiv.clientHeight);
 
-      let hauteurDiv = this.canva.clientHeight;
-      hauteurDiv = 30;
+      let hauteurDiv = this.canva.clientHeight/20;
+    //  hauteurDiv = 30;
       console.log((this.aboutDiv.style = "bottom:" + hauteurDiv + "px;")); //15% du fix it
     },
 
@@ -201,6 +201,7 @@ export default {
        this.render.setSize(window.innerWidth, window.innerHeight);
        this.render.setPixelRatio(window.devicePixelRatio);
         this.camera.zoom = 28;
+        
        
      //   this.aboutDiv.style = "top: 0 px";
       } else {
