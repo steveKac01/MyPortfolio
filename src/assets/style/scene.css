@@ -29,6 +29,8 @@
   
   h2 {
     font-size: 1.7em;
+    color: var(--main-link);
+
   }
   .sub-title{
   color:var(--text-secondary-color);
