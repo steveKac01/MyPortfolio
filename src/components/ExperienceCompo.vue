@@ -1,6 +1,11 @@
 <template>
   <div id="skills">
     <h1>COMPETENCES</h1>
+    <ProgressBar title="HTML-CSS" val="50"></ProgressBar>
+    <ProgressBar title="JAVASCRIPT" val="50"></ProgressBar>
+    <ProgressBar title="PHP" val="60"></ProgressBar>
+
+
     <ul>
       <!--   <li>2022: Actuellement en recherche de stage.</li> -->
       <li>2021-2022: Formation développeur web et web mobile à la CCI lyon.</li>
@@ -66,9 +71,13 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger.js";
 gsap.registerPlugin(ScrollTrigger);
+import ProgressBar from "../components/ProgressBarComponent.vue";
 
 export default {
   name: "ExperienceCompo",
+  components:{
+    ProgressBar
+  },
   methods: {
     /**
      * Tiles's animation.

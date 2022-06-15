@@ -7,7 +7,7 @@
             <h2>Steve Kaci</h2>
           </div>
           <div class="sub-title">
-            Développeur Web en devenir | ou pas on sait jamais si j'ai rage quit
+            Développeur Web en devenir 
             !
           </div>
         </div>
@@ -136,7 +136,7 @@ export default {
       const SPEED_IFRAME = 1;
       this.timerSwitch += SPEED_IFRAME;
 
-      // Changement de texture de la scène.
+      // Changement de texture de  la scène.
       if (this.timerSwitch > this.switchFrameDark) {
         /**
          * Changement de texture avec la lumière adaptée.
@@ -188,7 +188,6 @@ export default {
             this.textures[iTexture];
         }
       }
-      //  this.scene.children[1].children[3].material.map = this.textures[iTexture];
     },
 
     /**
@@ -199,16 +198,22 @@ export default {
 
       if (window.innerHeight > window.innerWidth) {
         //mobile
-        this.render.setSize(window.innerWidth, window.innerHeight);
+       this.render.setSize(window.innerWidth, window.innerHeight);
+       this.render.setPixelRatio(window.devicePixelRatio);
+        this.camera.zoom = 28;
+       
+     //   this.aboutDiv.style = "top: 0 px";
       } else {
-        this.render.setSize(window.innerWidth / 1.6, window.innerHeight / 1.6);
+           this.camera.zoom = 38;
+        this.render.setSize(window.innerWidth / 1.2, window.innerHeight / 1.2);
       }
       // maj de la camera
+      
       this.camera.left = -window.innerWidth / camFactor;
       this.camera.right = window.innerWidth / camFactor;
       this.camera.top = window.innerHeight / camFactor;
       this.camera.bottom = -window.innerHeight / camFactor;
-      this.camera.updateProjectionMatrix();
+      this.camera.updateProjectionMatrix()
       this.getSizeCanva();
     },
 
@@ -262,7 +267,7 @@ export default {
       /*
       mouse.x = (this.mousePosition.x / window.innerWidth) * 2 - 1;
       mouse.y = -(this.mousePosition.y / window.innerHeight) * 2 + 1;*/
-      //console.log(mouse)
+ 
 
       this.rayCaster.setFromCamera(mouse, this.camera);
       let intersects = this.rayCaster.intersectObjects(
@@ -283,7 +288,7 @@ export default {
     animate() {
       if (this.mousePosition != undefined) {
         if (!this.statusIdle) {
-          this.moveBone(this.mousePosition, this.neck, 40, 30);
+          this.moveHead(this.mousePosition, this.neck, 43, 28);
         } else {
           //retour du bone neck a l'emplacement d'origine
           this.returnHeadToOrigin();
@@ -354,7 +359,6 @@ export default {
         this.animateDarkMode();
       }
 
-      //Demande trop de ressource
       requestAnimationFrame(this.animate);
       this.cameraRotateBounce();
       this.controls.update();
@@ -382,25 +386,14 @@ export default {
     },
 
     /**
-     * Head tracking sur le déplacement de la souris.
-     */
-    mouseMove() {
-      this.mouse = { x: event.clientX, y: event.clientY };
-      if (this.neck) {
-        this.moveBone(this.mouse, this.neck, 40, 40);
-      }
-    },
-
-    /**
      * Rotation de l'armature
      */
-    moveBone(mouse, bone, degreeLimitX, degreeLimitY) {
+    moveHead(mouse, bone, degreeLimitX, degreeLimitY) {
       const speedMoveHead = 0.06;
+      const degreeLimits={x:degreeLimitX,y:degreeLimitY}
       let degrees = this.getMouseDegrees(
-        mouse.x,
-        mouse.y,
-        degreeLimitX,
-        degreeLimitY
+        mouse,
+       degreeLimits
       );
       if (bone) {
         this.boneRotate(this.neck, speedMoveHead, degrees.x, degrees.y);
@@ -410,7 +403,7 @@ export default {
     /**
      * Obtenir l'angle de la souris
      */
-    getMouseDegrees(x, y, degreeLimitX, degreeLimitY) {
+    getMouseDegrees(mouse, degreeLimits ) {
       let dx = 0,
         dy = 0,
         xdiff,
@@ -418,43 +411,44 @@ export default {
         ydiff,
         yPercentage;
 
-      let w = { x: window.innerWidth, y: window.innerHeight };
+      let rectanglePage = { x: window.innerWidth, y: window.innerHeight };
 
-      // Tête regarde à gauche (rotation entre 0 et - degreeLimitX)
+      // Tête regarde à gauche (rotation entre 0 et - degreeLimits.x)
 
       // Si le curseur est a gauche de la moitié de l'écran
-      if (x <= w.x / 2) {
+      if (mouse.x <= rectanglePage.x / 2) {
         // La différence entre le millieu de l'écran et la position du curseur
-        xdiff = w.x / 2 - x;
+        xdiff = rectanglePage.x / 2 - mouse.x;
         // Calcul du % de cette différence (par rapport au bord de l'écran)
-        xPercentage = (xdiff / (w.x / 2)) * 100;
-        //On converti le % par rapport à la rotation max du cou
-        dx = ((degreeLimitX * xPercentage) / 100) * -1;
+        xPercentage = (xdiff / (rectanglePage.x / 2)) * 100;
+        //On converti le % par rapport à la rotation max de la tête du personnage
+        dx = ((degreeLimits.x * xPercentage) / 100) * -1;
       }
-      // Tête regarde à droite (rotation entre 0 et degreeLimitX)
-      if (x >= w.x / 2) {
-        xdiff = x - w.x / 2;
-        xPercentage = (xdiff / (w.x / 2)) * 100;
-        dx = (degreeLimitX * xPercentage) / 100;
+      // Tête regarde à droite (rotation entre 0 et degreeLimits.x)
+      if (mouse.x >= rectanglePage.x / 2) {
+        xdiff = mouse.x - rectanglePage.x / 2;
+        xPercentage = (xdiff / (rectanglePage.x / 2)) * 100;
+        dx = (degreeLimits.x * xPercentage) / 100;
       }
 
-      // Tête levée (entre 0 et -degreeLimitY)
-      if (y <= w.y / 2) {
-        ydiff = w.y / 2 - y;
-        yPercentage = (ydiff / (w.y / 2)) * 100;
+      // Tête levée (entre 0 et -degreeLimits.y)
+      if (mouse.y <= rectanglePage.y / 2) {
+        ydiff = rectanglePage.y / 2 - mouse.y;
+        yPercentage = (ydiff / (rectanglePage.y / 2)) * 100;
         // Je multiplie les degrés limites pour faire monter la tête plus haut
-        dy = ((degreeLimitY * 1.2 * yPercentage) / 100) * -1;
+        dy = ((degreeLimits.y * 1.2 * yPercentage) / 100) * -1;
       }
 
-      // Tête baissée (entre 0 et degreeLimitY)
-      if (y >= w.y / 2) {
-        ydiff = y - w.y / 2;
-        yPercentage = (ydiff / (w.y / 2)) * 100;
-        dy = (degreeLimitY * 0 * yPercentage) / 100;
+      // Tête baissée (entre 0 et degreeLimits.y)
+      if (mouse.y >= rectanglePage.y / 2) {
+        ydiff = mouse.y - rectanglePage.y / 2;
+        yPercentage = (ydiff / (rectanglePage.y / 2)) * 100;
+        dy = (degreeLimits.y * 0 * yPercentage) / 100;
       }
       return { x: dx, y: dy };
     },
   },
+
   mounted() {
     //taille div
     this.canva = document.querySelector(".container-3d");
@@ -472,7 +466,7 @@ export default {
     const CANVA_SIZE = [350, 250];
     const IS_ALPHA = true;
     const USE_ANTIALIASING = true;
-    const CAMERA_ZOOM = 40;
+    const CAMERA_ZOOM = 45;
     const CAMERA_POSITION = [0.2603, 2.9707, 4.5465];
     const IS_AUTO_ROTATE = true;
     const SPEED_AUTO_ROTATE = 0.4;
@@ -542,7 +536,7 @@ export default {
 
     loader.load(PATH_TO_MODEL, (gltf) => {
       const model = gltf.scene;
-      model.position.set(0, -1.3, 0);
+      model.position.set(0.5, -1.3, 0);
       model.scale.set(1, 1, 1);
 
       this.scene.add(model);

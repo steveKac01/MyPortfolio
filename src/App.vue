@@ -33,9 +33,8 @@ export default {
     mousePosition: undefined,
   }),
   methods: {
-     mouseMove() {
-            this.mousePosition ={ x:event.clientX, y:event.clientY}
-           // console.log(this.mousePosition)  
+     mouseMove(mouseEvent) {
+            this.mousePosition ={ x:mouseEvent.clientX, y:mouseEvent.clientY}
               },
     handleSwitchTheme(payload) {
       this.isDarkMode = payload.isDarkTheme;
@@ -90,6 +89,7 @@ li {
   /* Validation */
   --background-slide: rgba(100, 100, 100, 0.5);
   --main-link: rgba(25, 98, 129, 0.6);
+  --main-link: rgba(25, 98, 129, 0.6);
   --footer-txt: white;
 }
 
@@ -104,7 +104,7 @@ li {
   /* NEW */
   --skills-color: #2b2929;
   /* Validation */
-  --main-link: lightblue;
+  --main-link: #EE9A00; /*low: #8e5c00 */
   --footer-txt: white;
   --project-backround: #383838;
 }

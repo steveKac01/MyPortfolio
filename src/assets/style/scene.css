@@ -47,7 +47,7 @@
   .photo > img {
     border-radius: 80%;
     width: 100%;
-    border: #ffffff solid 2px;
+    border: var(--main-link) solid 2px;
   }
   
   @media screen and (min-width: 768px) {

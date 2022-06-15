@@ -287,7 +287,6 @@ li:hover {
   .big-nav li {
     display: inline;
     padding: 15px;
-
     cursor: pointer;
     position: relative;
     transition: color 1s;
