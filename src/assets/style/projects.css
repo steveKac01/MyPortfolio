@@ -1,7 +1,6 @@
 img {
     opacity: 100%;
     transition: ease-out 1s;
-
 }
 
 .empty:hover img,

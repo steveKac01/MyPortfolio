@@ -89,7 +89,7 @@ li {
   /* Validation */
   --background-slide: rgba(100, 100, 100, 0.5);
   --main-link: rgba(25, 98, 129, 0.6);
-  --main-link: rgba(25, 98, 129, 0.6);
+  --main-link: rgba(16, 125, 172, 0.6);
   --footer-txt: white;
 }
 
@@ -104,7 +104,7 @@ li {
   /* NEW */
   --skills-color: #2b2929;
   /* Validation */
-  --main-link: #EE9A00; /*low: #8e5c00 */
+  --main-link: #a88545; /*low: #8e5c00 */
   --footer-txt: white;
   --project-backround: #383838;
 }

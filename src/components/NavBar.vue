@@ -205,10 +205,12 @@ li:hover {
   margin: 0;
 }
 
+
 .left-items {
   display: flex;
   align-items: center;
   cursor: pointer;
+  color: var(--main-link);
 }
 
 .left-items > div,
