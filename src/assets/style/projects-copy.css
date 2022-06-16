@@ -31,9 +31,9 @@
 
 .project {
     text-align: center;
- /*   background-color: white; */
+    background-color: white; 
     padding: 10px;
-    border-radius: 4%;
+    margin-bottom: 20px;
     position: relative;
   /*  top: 200px;*/
   /*  opacity: 0;*/
