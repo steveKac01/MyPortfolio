@@ -1,9 +1,9 @@
 <template>
   <div id="skills">
     <h1>COMPETENCES</h1>
-    <ProgressBar title="HTML-CSS" val="50"></ProgressBar>
-    <ProgressBar title="JAVASCRIPT" val="50"></ProgressBar>
-    <ProgressBar title="PHP" val="60"></ProgressBar>
+    <ProgressBar title="HTML-CSS" val=50></ProgressBar>
+    <ProgressBar title="JAVASCRIPT" val=50></ProgressBar>
+    <ProgressBar title="PHP" val=60></ProgressBar>
 
 
     <ul>

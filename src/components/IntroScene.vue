@@ -207,13 +207,19 @@ export default {
         //mobile
        this.render.setSize(window.innerWidth, window.innerHeight);
        this.render.setPixelRatio(window.devicePixelRatio);
-        this.camera.zoom = 28;
-        
+        this.camera.zoom = 32;
+        console.log(this.scene)
+      //  this.scene.children[1].position.y=-0.1;
+      if( this.scene.hasOwnProperty("position")){ //weird
+        console.log("ok trouvé")
+    this.scene. position.y=1;
+      }
           this.getSizeCanvaMobile();
      //   this.aboutDiv.style = "top: 0 px";
       } else {
            this.getSizeCanva();
            this.camera.zoom = 38;
+              this.scene.position.y=0;
         this.render.setSize(window.innerWidth / 1.2, window.innerHeight / 1.2);
       }
       // maj de la camera
